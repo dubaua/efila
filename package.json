@@ -4,6 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "devDependencies": {
-    "create-observable": "^1.0.2"
+    "create-observable": "^1.0.2",
+    "parcel-bundler": "^1.12.4",
+    "sass": "^1.23.7"
   }
 }
