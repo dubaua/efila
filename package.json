@@ -1,0 +1,9 @@
+{
+  "name": "efila",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "create-observable": "^1.0.2"
+  }
+}
