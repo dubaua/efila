@@ -1,9 +1,9 @@
 <template>
   <div class="cart">
-    <div class="cart__empty" v-if="totalAmount === 0">Корзина пока что, пуста ;(</div>
-    <div class="cart__filled" v-else>
+    <div v-if="totalAmount === 0" class="cart__empty">Корзина пока что, пуста ;(</div>
+    <div v-else class="cart__filled">
       <div class="cart__contents">
-        <position v-for="position in cart" :key="position.id" :position="position" :isCompact="isCompact"></position>
+        <position v-for="position in cart" :key="position.id" :position="position" :is-compact="isCompact" />
       </div>
       <div class="cart__total">
         <div class="cart__total-label">Всего</div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import Order from '@/components/Order';
 import Position from './Position';
 

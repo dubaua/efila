@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <section class="page" v-touch:swipe.right="openMenu" v-touch:swipe.left="closeMenu">
+    <section v-touch:swipe.right="openMenu" v-touch:swipe.left="closeMenu" class="page">
       <router-view />
       <overlay />
     </section>
@@ -19,21 +19,21 @@
     </template>
     <template v-else>
       <header class="desktop-header">
-        <navigation iscompact="isCompact" />
+        <navigation is-compact />
       </header>
       <aside class="desktop-panel">
         <logo class="desktop-panel__logo" />
-         <info />
+        <info />
         <div class="desktop-panel__cart">
-           <cart />
+          <cart />
           <status />
         </div>
       </aside>
       <transition name="fade">
-        <div class="cart-popup" v-if="page.isCartOpen">
+        <div v-if="page.isCartOpen" class="cart-popup">
           <div class="cart-popup__title">Корзина</div>
-          <cart iscompact="isCompact" />
-         <order />
+          <cart is-compact />
+          <order />
         </div>
       </transition>
     </template>
@@ -49,7 +49,7 @@ import Order from '@/components/Order';
 import Status from '@/components/cart/Status';
 import AppFooter from '@/components/AppFooter';
 import Logo from '@/components/Logo';
-import { mapState, mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
   name: 'App',
@@ -91,9 +91,11 @@ export default {
   min-height: 100vh;
 }
 
+$panel-width: 300px;
+
 @include from-breakpoint('xl') {
   .page {
-    margin-right: 300px;
+    margin-left: $panel-width;
     padding-bottom: 0;
     padding-top: 66px;
   }
@@ -101,13 +103,11 @@ export default {
 
 .desktop-panel {
   @include fixed-overlay;
-  left: auto;
-  width: 300px;
+  left: right;
+  width: $panel-width;
   z-index: 2;
   display: flex;
   flex-direction: column;
-  background: $color-background--contrast;
-  color: $color-text--contrast;
 
   &__cart {
     margin-top: auto;
@@ -118,8 +118,7 @@ export default {
 .desktop-header {
   @include fixed-overlay;
   bottom: auto;
-  background: $color-background--contrast;
-  color: $color-text--contrast;
+  left: $panel-width;
 }
 
 .cart-popup {
@@ -130,7 +129,6 @@ export default {
   max-width: 680px;
   width: 100%;
   padding: $base 0;
-  background: $color-background;
   max-height: 100%;
   overflow: auto;
 

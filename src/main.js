@@ -1,4 +1,5 @@
 import 'normalize.css';
+import './webfonts/stylesheet.css';
 import '@/styles/main.scss';
 import Vue from 'vue';
 import Vue2TouchEvents from 'vue2-touch-events';

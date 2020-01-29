@@ -1,8 +1,8 @@
 <template>
-  <form class="form" @submit.prevent="send" v-if="isOrderAvailable">
+  <form v-if="isOrderAvailable" class="form" @submit.prevent="send">
     <vue-form-generator :schema="schema" :model="model" :options="formOptions" />
     <base-button size="wide" :disabled="isSending || isSent">Заказываю</base-button>
-    <div class="form__isSent" v-if="isSent">
+    <div v-if="isSent" class="form__isSent">
       <p>🎉 🎉 🎉</p>
       <p>Ваш заказ отправлен! Скоро вам перезвонит наш менеджер для подтверждения заказа</p>
     </div>
@@ -12,7 +12,7 @@
 <script>
 // TODO disable form while sending
 
-import api from '@/api/';
+import { saveOrder, sendForm } from '@/api/index.js';
 import { mapMutations } from 'vuex';
 
 export default {
@@ -113,7 +113,7 @@ export default {
         order,
         total,
       };
-      api.sendForm(form).then(response => {
+      sendForm(form).then(response => {
         this.isSending = false;
         if (response) {
           this.isSent = true;
@@ -138,7 +138,7 @@ export default {
           value: `${position.title} × ${position.amount}шт`,
         })),
       };
-      api.saveOrder(cockpitOrder);
+      saveOrder(cockpitOrder);
     },
   },
 };

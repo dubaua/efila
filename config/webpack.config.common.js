@@ -7,9 +7,6 @@ const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const helpers = require('./helpers');
 const isDev = process.env.NODE_ENV === 'development';
 
-console.log(process.env.NODE_ENV);
-
-
 const webpackConfig = {
   entry: {
     polyfill: '@babel/polyfill',
@@ -72,7 +69,7 @@ const webpackConfig = {
     new HtmlPlugin({ template: 'public/index.html', chunksSortMode: 'dependency' }),
     new webpack.NormalModuleReplacementPlugin(
       /element-ui[\/\\]lib[\/\\]locale[\/\\]lang[\/\\]zh-CN/,
-      'element-ui/lib/locale/lang/ru-RU'
+      'element-ui/lib/locale/lang/ru-RU',
     ),
   ],
 };

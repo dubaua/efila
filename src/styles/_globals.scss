@@ -1,10 +1,10 @@
-@import "./_colors";
-@import "./_breakpoints";
+@import './_colors.scss';
+@import './_breakpoints.scss';
 
 $base: 16px;
 
-$font--title: "Merriweather", serif;
-$font--body: "Noto Sans", sans-serif;
+$font--title: 'Sangha Kali', serif;
+$font--body: 'Anonymous Pro', 'IBM Plex Sans', sans-serif;
 
 $timing-fast: 0.1s;
 $timing: 0.33s;

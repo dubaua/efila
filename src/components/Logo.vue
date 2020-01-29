@@ -1,6 +1,6 @@
 <template>
   <router-link class="logo" to="/">
-    <icon glyph="logo--parts" :width="180" :height="180" />
+    <icon glyph="logo" :width="240" :height="240" />
   </router-link>
 </template>
 

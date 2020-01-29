@@ -1,9 +1,11 @@
 @import "~@/styles/_globals";
 
 .button {
-  font-family: $font--body;
-  border-radius: $base * 0.25;
-  padding: $base * 0.62 $base * 0.5;
+  font-family: $font--title;
+  font-size: 32px;
+  line-height: 1;
+  text-transform: lowercase;
+  padding: 4px $base * 0.5 8px;
   border: 0;
   background: $color-primary;
   color: $color-text--contrast;
@@ -24,7 +26,7 @@
     background: desaturate($color-primary, 100%);
     cursor: not-allowed;
   }
-
+  
   &--mini {
     width: $base * 1.5;
     height: $base * 1.5;

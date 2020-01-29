@@ -37,9 +37,9 @@ const webpackConfig = merge(commonConfig, {
     port: 8000,
     stats: 'errors-only',
     proxy: {
-      '/cockpit/api': {
+      '/cockpit/': {
         target: 'http://efila.dubaua.ru/',
-        changeOrigin: true
+        changeOrigin: true,
       },
     },
   },

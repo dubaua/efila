@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css?family=Merriweather:400,700,900|Noto+Sans:400,400i,700&subset=cyrillic');
-@import "_grid";
-@import "_colors";
-@import "_globals";
-@import "_transitions";
-@import "_typography";
+@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro:400,700&display=swap&subset=cyrillic');
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400&display=swap&text=%E2%82%BD');
+@import "_grid.scss";
+@import "_colors.scss";
+@import "_globals.scss";
+@import "_transitions.scss";
+@import "_typography.scss";
 
 html {
-  background: $color-tint;
-  color: $color-text;
+  background: black;
+  color: white;
   font-family: $font--body;
   overflow-y: scroll;
 }

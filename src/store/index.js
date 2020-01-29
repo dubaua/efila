@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import VuexPersist from 'vuex-persist';
 import cart from './modules/cart.js';
 import page from './modules/page.js';
-import products from './modules/products.js';
 
 Vue.use(Vuex);
 

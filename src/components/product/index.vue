@@ -2,14 +2,14 @@
   <div class="shop-section">
     <div class="container">
       <div class="row">
-        <div class="col col-xs-12 col-xs-order-1 col-lg-4 col-xxl-6">
+        <!-- <div class="col col-xs-12 col-xs-order-1 col-lg-4 col-xxl-6">
           <div class="shop-section__about">
             <div class="typography">
               <h1>{{ label }}</h1>
               <div>{{ description }}</div>
             </div>
           </div>
-        </div>
+        </div> -->
         <div class="col col-xs-12 col-lg-8 col-lg-order-1 col-xxl-6">
           <div v-if="description.image" class="shop-section__preview">
             <img class="shop-section__image" :src="description.image.path" :alt="description.title" />
@@ -26,14 +26,14 @@
           >
             <card :product="card" />
           </div>
-          <div
+          <!-- <div
             v-for="(banner, index) in banners"
             :key="index"
             class="col col-xs-12 col-sm-6 col-lg-4 col-xxl-3"
             :class="getBannerClasses(banner.ordering)"
           >
             <banner :src="banner.image.path" :background="banner.background" />
-          </div>
+          </div> -->
         </template>
         <div v-else class="col col-xs-12">Нет товаров</div>
       </div>
@@ -60,9 +60,7 @@ export default {
   },
   created() {
     this.fetchProducts();
-  },
-  beforeUpdate() {
-    this.fetchProducts();
+    console.log('created');
   },
   methods: {
     getBannerClasses(ordering) {
@@ -80,6 +78,12 @@ export default {
       this.description = description;
       this.label = label;
     },
+  },
+
+  // TODO отследить от
+  beforeRouteUpdate(to, from, next) {
+    this.fetchProducts();
+    next();
   },
 };
 </script>

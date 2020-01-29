@@ -25,11 +25,11 @@ export default {
         },
         {
           to: '/bakedRolls',
-          label: 'Горячие роллы',
+          label: 'Горячие',
         },
         {
           to: '/hotRolls',
-          label: 'Запеченные роллы',
+          label: 'Запеченные',
         },
         {
           to: '/philadelphia',
@@ -54,7 +54,7 @@ export default {
 
         {
           to: '/contact-and-delivery',
-          label: 'Контакты и доставка',
+          label: 'Контакты',
         },
       ],
     };
@@ -75,9 +75,11 @@ export default {
   &__link {
     display: flex;
     align-items: center;
-    padding: $base $base * 2;
-    font-family: $font--title;
+    padding: $base $base;
+    font-family: $font--body;
+    font-size: 28px;
     text-decoration: none;
+    text-transform: lowercase;
     letter-spacing: 0.05em;
     color: $color-text--contrast;
     cursor: pointer;
