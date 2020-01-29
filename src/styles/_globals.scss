@@ -1,0 +1,19 @@
+@import "./_colors";
+@import "./_breakpoints";
+
+$base: 16px;
+
+$font--title: "Merriweather", serif;
+$font--body: "Noto Sans", sans-serif;
+
+$timing-fast: 0.1s;
+$timing: 0.33s;
+$timing-long: 0.5s;
+
+@mixin fixed-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}

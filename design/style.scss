@@ -1,0 +1,123 @@
+body {
+  margin: 0;
+  background: #100e0e;
+}
+
+.screen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  &--card {
+    justify-content: flex-start;
+    padding-left: 200px;
+  }
+}
+
+.drive {
+  font-family: 'Sangha Kali';
+  font-size: 48px;
+  border: 0;
+  background: #e34b01;
+  
+  margin: 0;
+  position: relative;
+  width: 100%;
+  color: white;
+  overflow: hidden;
+  cursor: grab;
+  transition: box-shadow .2s ease-out;
+
+  &:hover {
+    box-shadow: 0 5px 50px #e34b01;
+  }
+
+  &:focus {
+    outline: none;
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &__state {
+    position: relative;
+    left: 0;
+    width: 100%;
+    top: 0;
+    transform-origin: left bottom;
+
+    &--active {
+      position: absolute;
+      transform: translateX(100%);
+    }
+  }
+}
+
+.card {
+  max-width: 480px;
+}
+
+.preview {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  cursor: zoom-in;
+}
+
+.zoom-overlay {
+  position: fixed;
+  background: rgba(0, 0, 0, 0.75);
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  cursor: zoom-out;
+
+  &--disabled {
+    display: none;
+  }
+}
+
+.zoom-container {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 2px;
+  background: red;
+  &--disabled {
+    display: none;
+  }
+  img {
+    transform: translate(-50%, -50%);
+    height: auto;
+  }
+}
+
+.success-area {
+  width: 100%;
+  overflow: hidden;
+  text-align: center;
+  padding: 100px 0;
+}
+
+.delivery {
+  display: inline-block;
+  transform-origin: left bottom;
+
+  &__word {
+    display: inline-block;
+    font-family: 'Sangha Kali';
+    font-size: 48px;
+    color: white;
+    transform-origin: right bottom;
+
+    &--cabin {
+      margin-right: 0.3em;
+    }
+    &--product {
+      transform: translate(100vh, 0);
+    }
+  }
+}

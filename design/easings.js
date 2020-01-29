@@ -25,19 +25,19 @@ export const easeInSin = t => 1 + Math.sin((Math.PI / 2) * t - Math.PI / 2);
 export const easeOutSin = t => Math.sin((Math.PI / 2) * t);
 export const easeInOutSin = t => (1 + Math.sin(Math.PI * t - Math.PI / 2)) / 2;
 
-export const easingCircIn = t => -(Math.sqrt(1 - t * t) - 1);
-export const easingCircOut = t => Math.sqrt(1 - (t = t - 1) * t);
-export const easingCircInOut = t =>
+export const easingInCirc = t => -(Math.sqrt(1 - t * t) - 1);
+export const easingOutCirc = t => Math.sqrt(1 - (t = t - 1) * t);
+export const easingInOutCirc = t =>
   (t *= 2) < 1 ? -0.5 * (Math.sqrt(1 - t * t) - 1) : 0.5 * (Math.sqrt(1 - (t -= 2) * t) + 1);
 
-export const easingExpIn = t => Math.pow(2, 10 * (t - 1)) - 0.001;
-export const easingExpOut = t => 1 - Math.pow(2, -10 * t);
-export const easingExpInOut = t =>
+export const easingInExp = t => Math.pow(2, 10 * (t - 1)) - 0.001;
+export const easingOutExp = t => 1 - Math.pow(2, -10 * t);
+export const easingInOutExp = t =>
   (t *= 2) < 1 ? 0.5 * Math.pow(2, 10 * (t - 1)) : 0.5 * (2 - Math.pow(2, -10 * (t - 1)));
 
-export const easingBackIn = (t, p = 1.70158) => t * t * ((p + 1) * t - p);
-export const easingBackOut = (t, p = 1.70158) => --t * t * ((p + 1) * t + p) + 1;
-export const easingBackInOut = (t, p = 1.70158) => {
+export const easingInBack = (t, p = 1.70158) => t * t * ((p + 1) * t - p);
+export const easingOutBack = (t, p = 1.70158) => --t * t * ((p + 1) * t + p) + 1;
+export const easingInOutBack = (t, p = 1.70158) => {
   const s = p * 1.525;
   if ((t *= 2) < 1) {
     return 0.5 * (t * t * ((s + 1) * t - s));

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.scss" />
+  </head>
+  <body>
+    <div class="screen">
+      <img src="./logo.svg" width="727" height="248" />
+    </div>
+    <br />
+    <div class="screen screen--card">
+      <div class="card">
+        <div class="card__preview">
+          <img src="./35600000706_1.jpg" class="preview" data-image-preview />
+        </div>
+        <button class="drive" id="drive" data-is-animating="0" data-state="0">
+          <div class="drive__state" data-state="initial">хочу</div>
+          <div class="drive__state drive__state--active" data-state="active">в корзине</div>
+        </button>
+      </div>
+    </div>
+    <div class="screen">
+      <div class="success-area" data-success>
+        <div class="delivery" data-delivery-van>
+          <span class="delivery__word delivery__word--cabin" data-delivery-cabin>готовим,</span>
+          <span class="delivery__word delivery__word--product" data-delivery-product>и мчим к вам!</span>
+        </div>
+      </div>
+    </div>
+
+    <script src="efila.js"></script>
+  </body>
+</html>

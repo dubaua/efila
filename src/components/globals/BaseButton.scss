@@ -1,0 +1,43 @@
+@import "~@/styles/_globals";
+
+.button {
+  font-family: $font--body;
+  border-radius: $base * 0.25;
+  padding: $base * 0.62 $base * 0.5;
+  border: 0;
+  background: $color-primary;
+  color: $color-text--contrast;
+  cursor: pointer;
+  min-width: 140px;
+  text-align: center;
+  transition: $timing-fast;
+
+  &:hover {
+    background: $color-primary-l;
+  }
+
+  &:active {
+    background: $color-primary-d;
+  }
+
+  &:disabled {
+    background: desaturate($color-primary, 100%);
+    cursor: not-allowed;
+  }
+
+  &--mini {
+    width: $base * 1.5;
+    height: $base * 1.5;
+    min-width: 0;
+    text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-weight: normal;
+  }
+
+  &--wide {
+    width: 100%;
+  }
+}

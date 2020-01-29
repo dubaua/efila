@@ -1,0 +1,22 @@
+$hue: 16;
+
+$color-primary: hsl($hue, 87%, 50%);
+$color-primary-l: lighten(saturate($color-primary, 1), 2);
+$color-primary-d: darken(desaturate($color-primary, 1), 2);
+
+$color-tint: hsl($hue, 43%, 93%);
+$color-tint--muted: hsl($hue, 33%, 98%);
+$color-shade: hsl($hue, 81%, 11%);
+$color-shade--muted: hsl($hue, 19%,33%);
+
+$color-text: $color-shade;
+$color-text--title: $color-text;
+$color-text--body: $color-shade--muted;
+$color-text--contrast: white;
+
+$color-background: white;
+$color-background--contrast: hsl($hue, 20%, 5%);
+$color-background--panel: hsl($hue, 2%, 64%);
+
+$color-unactive: hsl($hue, 10%, 65%);
+$color-background-unactive: hsl($hue, 10%, 95%);

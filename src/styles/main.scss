@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Merriweather:400,700,900|Noto+Sans:400,400i,700&subset=cyrillic');
+@import "_grid";
+@import "_colors";
+@import "_globals";
+@import "_transitions";
+@import "_typography";
+
+html {
+  background: $color-tint;
+  color: $color-text;
+  font-family: $font--body;
+  overflow-y: scroll;
+}
+
+.color-text {
+  color: $color-text;
+  fill: $color-text;
+}
+
+.color-primary {
+  color: $color-primary;
+  fill: $color-primary;
+}
+
+.color-text--contrast {
+  color: $color-text--contrast;
+  fill: $color-text--contrast;
+}
+
+.color-background--contrast {
+  color: $color-background--contrast;
+  fill: $color-background--contrast;
+}
