@@ -9,12 +9,15 @@
     <div class="card__details">
       <div class="card__about">
         <h2 class="card__title">{{ product.title }}</h2>
-        <p><span class="muted">СОСТАВ:</span> {{ product.description }}</p>
-        <p><span class="muted">ВЕС:</span> {{ product.measure }}</p>
-        <p><span class="muted">КАЛОРИИ:</span> {{ product.calories }}</p>
+        <p>{{ product.description }}</p>
+        <p>{{ product.measure }}</p>
+        <p>{{ product.calories }} кКал</p>
+      </div>
+      <div class="card__price">
+        <div class="card__price-sum">{{ price }},00</div>
+        <div class="card__price-units">рублей</div>
       </div>
       <div class="card__action">
-        <div class="card__price">{{ price }},00 руб.</div>
         <base-button class="card__button button--wide" @click="addToCart(product)">
           {{ amount > 0 ? 'есть ' + amount : 'хочу' }}
         </base-button>
@@ -82,16 +85,12 @@ export default {
   height: calc(100% - #{$base * 2});
   margin-bottom: $base * 2;
   box-sizing: border-box;
-  background-color: black;
-  color: white;
-
-  h2#{$block}__title {
-    
-    font-size: 36px;
-    
+  // box-shadow: -1px 4px 20px 1px hsl(16, 37%, 81%);
+  
+  &__title {
+    font-size: 48px;
     font-weight: normal;
-    margin-bottom: 12px;
-    margin-top: 0;
+    margin: 0 0 12px;
   }
 
   &__preview {
@@ -113,7 +112,7 @@ export default {
   &__about {
     margin-top: 16px;
     p {
-    // color: #bd9b8e;
+      // color: #bd9b8e;
       font-size: 20px;
       line-height: 1.35;
       margin-top: 0;
@@ -129,13 +128,20 @@ export default {
   }
 
   &__price {
-    font-family: $font--body;
-    font-size: 24px;
-    .rouble {
-      // font-weight: 300;
-      font-size: 28px;
-      margin-left: 0.2em;
-    }
+    display: inline-block;
+    text-align: right;
+  }
+
+  &__price-sum {
+    font-size: 48px;
+    line-height: 36px;
+    word-spacing: -0.3em;
+  }
+
+  &__price-units {
+    font-size: 15px;
+    font-weight: 700;
+    margin-right: 0.2em;
   }
 
   &__button {

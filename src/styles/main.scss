@@ -7,10 +7,9 @@
 @import "_typography.scss";
 
 html {
-  background: black;
-  color: white;
-  font-family: $font--body;
   overflow-y: scroll;
+  min-width: 100vh;
+  font-family: $font--body;
 }
 
 .color-text {

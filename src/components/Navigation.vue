@@ -69,35 +69,22 @@ export default {
 @import '~@/styles/_globals.scss';
 
 .menu {
+  background: $color-background--contrast;
+  color: $color-text--contrast;
+
   &--compact {
     display: flex;
   }
   &__link {
-    display: flex;
-    align-items: center;
     padding: $base $base;
-    font-family: $font--body;
     font-size: 28px;
     text-decoration: none;
     text-transform: lowercase;
-    letter-spacing: 0.05em;
     color: $color-text--contrast;
     cursor: pointer;
     &.router-link-exact-active {
       color: $color-primary;
       position: relative;
-
-      &:before {
-        content: '';
-        position: absolute;
-        display: block;
-        left: 50%;
-        transform: translate(-50%, 0);
-        top: 100%;
-        border-width: 8px 12px 0 12px;
-        border-style: solid;
-        border-color: $color-background--contrast transparent transparent transparent;
-      }
     }
 
     @include from-breakpoint('xl') {

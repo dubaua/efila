@@ -41,7 +41,6 @@
 </template>
 
 <script>
-import Product from '@/components/product';
 import Navigation from '@/components/Navigation';
 import Info from '@/components/Info';
 import Cart from '@/components/cart';
@@ -54,7 +53,6 @@ import { mapActions, mapGetters, mapState } from 'vuex';
 export default {
   name: 'App',
   components: {
-    Product,
     Cart,
     Order,
     Status,
@@ -86,6 +84,9 @@ export default {
 @import './styles/_globals';
 
 .page {
+  background: $color-background;
+  color: $color-text;
+
   box-sizing: border-box;
   padding-bottom: 56px;
   min-height: 100vh;
@@ -108,7 +109,8 @@ $panel-width: 300px;
   z-index: 2;
   display: flex;
   flex-direction: column;
-
+  background: $color-background--contrast;
+  color: $color-text--contrast;
   &__cart {
     margin-top: auto;
     overflow: auto;

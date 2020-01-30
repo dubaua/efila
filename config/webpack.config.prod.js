@@ -17,10 +17,9 @@ const webpackConfig = merge(commonConfig, {
     path: helpers.root('dist'),
     publicPath: '/',
     filename: 'js/[hash].js',
-    chunkFilename: 'js/[id].[hash].chunk.js',
   },
   optimization: {
-    runtimeChunk: 'single',
+    runtimeChunk: false,
     minimizer: [
       new OptimizeCSSAssetsPlugin({
         cssProcessorPluginOptions: {
@@ -33,32 +32,11 @@ const webpackConfig = merge(commonConfig, {
         sourceMap: !isProd,
       }),
     ],
-    splitChunks: {
-      chunks: 'all',
-      maxInitialRequests: Infinity,
-      minSize: 0,
-      cacheGroups: {
-        vendor: {
-          test: /[\\/]node_modules[\\/]/,
-          name(module) {
-            const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1];
-            return `npm.${packageName.replace('@', '')}`;
-          },
-        },
-        styles: {
-          test: /\.css$/,
-          name: 'styles',
-          chunks: 'all',
-          enforce: true,
-        },
-      },
-    },
   },
   plugins: [
     new webpack.EnvironmentPlugin(environment),
     new MiniCSSExtractPlugin({
       filename: 'css/[name].[hash].css',
-      chunkFilename: 'css/[id].[hash].css',
     }),
     new CompressionPlugin({
       filename: '[path].gz[query]',
