@@ -7,7 +7,7 @@ const button = document.getElementById('drive');
 const buttonState = button.querySelector('[data-state="initial"]');
 const buttonStateActive = button.querySelector('[data-state="active"]');
 
-button.addEventListener('click', function() {
+button.addEventListener('click', () => {
   const isAnimating = Number(button.dataset.isAnimating);
   const nextState = !Number(button.dataset.state);
 
@@ -37,7 +37,7 @@ button.addEventListener('click', function() {
 const zoomImageNodeList = document.querySelectorAll('[data-image-preview]');
 for (let i = 0; i < zoomImageNodeList.length; i++) {
   const zoomImageNode = zoomImageNodeList[i];
-  zoomImageNode.addEventListener('click', function() {
+  zoomImageNode.addEventListener('click', () => {
     zoomIn(zoomImageNode);
   });
 }
@@ -93,7 +93,7 @@ function zoomIn(zoomImageNode) {
     overlayNode.classList.add(ZOOM_OVERLAY_CLASSNAME);
     document.body.appendChild(overlayNode);
 
-    overlayNode.addEventListener('click', function() {
+    overlayNode.addEventListener('click', () => {
       zoomOut(zoomImageNode);
     });
 
@@ -173,7 +173,7 @@ const deliveryVanNode = document.querySelector('[data-delivery-van]');
 const deliveryCabinNode = document.querySelector('[data-delivery-cabin]');
 const deliveryProductNode = document.querySelector('[data-delivery-product]');
 
-successNode.addEventListener('click', function() {
+successNode.addEventListener('click', () => {
   lel();
 });
 
@@ -186,7 +186,7 @@ function lel() {
       const productTranslateX = (1 - productProgress) * 50;
 
       const productTranslateYProgress = ez.easeOutCubic(
-        productProgress < 0.5 ? productProgress * 2 : 2 - productProgress * 2
+        productProgress < 0.5 ? productProgress * 2 : 2 - productProgress * 2,
       );
       const productTranslateY = productTranslateYProgress * -38;
 

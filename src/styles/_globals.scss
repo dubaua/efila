@@ -1,10 +1,8 @@
 @import './_colors.scss';
 @import './_breakpoints.scss';
 
-$base: 16px;
-
-$font--title: 'Sangha Kali', serif;
-$font--body: 'Anonymous Pro', 'IBM Plex Sans', sans-serif;
+$font-title:'IBM Plex Serif', serif;
+$font-body: 'Rubik', sans-serif;
 
 $timing-fast: 0.1s;
 $timing: 0.33s;

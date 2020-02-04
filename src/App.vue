@@ -18,10 +18,7 @@
       <app-footer />
     </template>
     <template v-else>
-      <header class="desktop-header">
-        <navigation is-compact />
-      </header>
-      <aside class="desktop-panel">
+      <aside class="desktop-panel contrast">
         <logo class="desktop-panel__logo" />
         <info />
         <div class="desktop-panel__cart">
@@ -29,6 +26,9 @@
           <status />
         </div>
       </aside>
+      <header class="desktop-header">
+        <navigation is-compact />
+      </header>
       <transition name="fade">
         <div v-if="page.isCartOpen" class="cart-popup">
           <div class="cart-popup__title">Корзина</div>
@@ -36,6 +36,7 @@
           <order />
         </div>
       </transition>
+      <zoom />
     </template>
   </div>
 </template>
@@ -48,6 +49,7 @@ import Order from '@/components/Order';
 import Status from '@/components/cart/Status';
 import AppFooter from '@/components/AppFooter';
 import Logo from '@/components/Logo';
+import Zoom from '@/components/Zoom';
 import { mapActions, mapGetters, mapState } from 'vuex';
 
 export default {
@@ -60,10 +62,11 @@ export default {
     Logo,
     Info,
     Navigation,
+    Zoom,
   },
   computed: {
     ...mapState(['page']),
-    ...mapGetters(['somePanelsIsOpen']),
+    ...mapGetters(['somePanelsIsOpen', 'isZoomed']),
     isMobile() {
       return window.innerWidth <= 1200;
     },
@@ -83,34 +86,35 @@ export default {
 <style lang="scss">
 @import './styles/_globals';
 
-.page {
-  background: $color-background;
-  color: $color-text;
+$header-height: 75px;
+$panel-width: 300px;
 
+.page {
   box-sizing: border-box;
   padding-bottom: 56px;
   min-height: 100vh;
+  background: $color-gray-75;
+  color: $color-gray-900;
 }
-
-$panel-width: 300px;
 
 @include from-breakpoint('xl') {
   .page {
     margin-left: $panel-width;
     padding-bottom: 0;
-    padding-top: 66px;
+    padding-top: $header-height;
   }
 }
 
 .desktop-panel {
-  @include fixed-overlay;
-  left: right;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  top: $header-height;
   width: $panel-width;
-  z-index: 2;
   display: flex;
   flex-direction: column;
-  background: $color-background--contrast;
-  color: $color-text--contrast;
+  background: $color-gray-contrast-50;
+  color: $color-gray-contrast-900;
   &__cart {
     margin-top: auto;
     overflow: auto;
@@ -118,9 +122,10 @@ $panel-width: 300px;
 }
 
 .desktop-header {
-  @include fixed-overlay;
-  bottom: auto;
-  left: $panel-width;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
 }
 
 .cart-popup {
@@ -130,7 +135,7 @@ $panel-width: 300px;
   transform: translate(-50%, -50%);
   max-width: 680px;
   width: 100%;
-  padding: $base 0;
+  padding: 16px 0;
   max-height: 100%;
   overflow: auto;
 
@@ -138,7 +143,7 @@ $panel-width: 300px;
     text-align: center;
     font-family: 'Merriweather', serif;
     font-weight: 700;
-    font-size: $base * 1.25;
+    font-size: 16px * 1.25;
   }
 }
 </style>

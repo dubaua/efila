@@ -18,7 +18,7 @@ export default {
 @import '~@/styles/_globals.scss';
 
 .banner {
-  height: calc(100% - #{$base * 2});
+  height: calc(100% - #{16px * 2});
   box-sizing: border-box;
   border-radius: 2px;
   overflow: hidden;

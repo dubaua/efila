@@ -1,11 +1,11 @@
-@import "~@/styles/_globals";
+@import '~@/styles/_globals';
 
 .button {
-  font-family: $font--title;
-  font-size: 32px;
+  font-family: $font-body;
+  font-size: 24px;
   line-height: 1;
   text-transform: lowercase;
-  padding: 4px $base * 0.5 8px;
+  padding: 8px 16px;
   border: 0;
   background: $color-primary;
   color: $color-text--contrast;
@@ -26,10 +26,10 @@
     background: desaturate($color-primary, 100%);
     cursor: not-allowed;
   }
-  
+
   &--mini {
-    width: $base * 1.5;
-    height: $base * 1.5;
+    width: 16px * 1.5;
+    height: 16px * 1.5;
     min-width: 0;
     text-align: center;
     display: inline-flex;

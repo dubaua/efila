@@ -2,24 +2,20 @@
   <div class="card">
     <div class="card__preview">
       <div class="card__tags">
-        <div v-for="tag in product.tags" v-if="tag" :key="tag" class="card__tag" :class="getTag(tag)">{{ tag }}</div>
+        <div v-for="tag in tags" :key="tag" class="card__tag" :class="getTag(tag)">{{ tag }}</div>
       </div>
-      <img :src="product.photo.path" :alt="product.title" />
+      <img ref="productImage" :src="product.photo.path" :alt="product.title" @click="zoomImage" />
     </div>
     <div class="card__details">
-      <div class="card__about">
-        <h2 class="card__title">{{ product.title }}</h2>
-        <p>{{ product.description }}</p>
-        <p>{{ product.measure }}</p>
-        <p>{{ product.calories }} кКал</p>
-      </div>
-      <div class="card__price">
-        <div class="card__price-sum">{{ price }},00</div>
-        <div class="card__price-units">рублей</div>
-      </div>
+      <h2>{{ product.title }}</h2>
+      <p>{{ product.description }}</p>
+      <p>{{ product.measure }}</p>
+      <p>{{ product.calories }} кКал</p>
+
       <div class="card__action">
+        <div class="card__price">{{ price }} ₽</div>
         <base-button class="card__button button--wide" @click="addToCart(product)">
-          {{ amount > 0 ? 'есть ' + amount : 'хочу' }}
+          {{ amount > 0 ? 'в корзине ' + amount : 'в корзину' }}
         </base-button>
       </div>
     </div>
@@ -27,8 +23,9 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex';
+import { mapActions, mapMutations } from 'vuex';
 import { numberWithSpaces } from '@/utils';
+import { EventBus } from '@/utils/index.js';
 
 /* eslint-disable no-underscore-dangle */
 export default {
@@ -54,8 +51,12 @@ export default {
     amount() {
       return this.$store.getters.amountInCart(this.versionId);
     },
+    tags() {
+      return this.product.tags.filter(tag => tag !== '');
+    },
   },
   methods: {
+    ...mapMutations(['zoomImage']),
     ...mapActions(['addToCart']),
     // actually this is action creator
     setVersion(versionId) {
@@ -70,6 +71,9 @@ export default {
     getTag(tag) {
       return `card__tag--${tag}`;
     },
+    zoomImage() {
+      EventBus.$emit('zoom-image', this.$refs.productImage);
+    },
   },
 };
 </script>
@@ -82,16 +86,9 @@ export default {
 
   display: flex;
   flex-direction: column;
-  height: calc(100% - #{$base * 2});
-  margin-bottom: $base * 2;
+  height: calc(100% - 16px);
+  margin-bottom: 16px;
   box-sizing: border-box;
-  // box-shadow: -1px 4px 20px 1px hsl(16, 37%, 81%);
-  
-  &__title {
-    font-size: 48px;
-    font-weight: normal;
-    margin: 0 0 12px;
-  }
 
   &__preview {
     position: relative;
@@ -105,18 +102,17 @@ export default {
 
   &__details {
     flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-  }
+    padding: 8px 16px;
 
-  &__about {
-    margin-top: 16px;
+    h2 {
+      margin: 0 0 10px;
+      font: normal 32px/1 $font-body;
+      font-weight: normal;
+    }
     p {
-      // color: #bd9b8e;
-      font-size: 20px;
-      line-height: 1.35;
-      margin-top: 0;
-      margin-bottom: 10px;
+      margin: 0 0 10px;
+      color: $color-gray-700;
+      font: normal 16px/1.38 $font-body;
     }
   }
 
@@ -128,20 +124,7 @@ export default {
   }
 
   &__price {
-    display: inline-block;
-    text-align: right;
-  }
-
-  &__price-sum {
-    font-size: 48px;
-    line-height: 36px;
-    word-spacing: -0.3em;
-  }
-
-  &__price-units {
-    font-size: 15px;
-    font-weight: 700;
-    margin-right: 0.2em;
+    font-size: 32px;
   }
 
   &__button {
@@ -150,22 +133,22 @@ export default {
 
   &__tags {
     position: absolute;
-    top: $base * -1.25;
-    right: $base * -1.25;
+    top: 16px * -1.25;
+    right: 16px * -1.25;
     display: flex;
   }
 
   &__tag {
     background: $color-background--contrast;
     color: $color-text--contrast;
-    font-size: $base * 0.75;
+    font-size: 16px * 0.75;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: bold;
-    width: $base * 2.5;
+    width: 16px * 2.5;
     text-align: center;
-    padding: $base * 0.87 0;
-    margin-left: $base * 0.5;
+    padding: 16px * 0.87 0;
+    margin-left: 16px * 0.5;
     border-radius: 50%;
 
     &--hit {

@@ -1,23 +1,9 @@
 <template>
   <div class="shop-section">
-    <div class="container">
+    <div v-if="isLoading">Загрузка...</div>
+    <div class="container" v-else>
       <div class="row">
-        <!-- <div class="col col-xs-12 col-xs-order-1 col-lg-4 col-xxl-6">
-          <div class="shop-section__about">
-            <div class="typography">
-              <h1>{{ label }}</h1>
-              <div>{{ description }}</div>
-            </div>
-          </div>
-        </div> -->
-        <div class="col col-xs-12 col-lg-8 col-lg-order-1 col-xxl-6">
-          <div v-if="description.image" class="shop-section__preview">
-            <img class="shop-section__image" :src="description.image.path" :alt="description.title" />
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <template v-if="entries">
+        <template v-if="entries.length">
           <div
             v-for="(card, id, index) in entries"
             :key="index"
@@ -43,7 +29,8 @@
 
 <script>
 import Card from './Card.vue';
-import { getCollectionByKey, getCollectionSchemaByKey } from '@/api/index.js';
+import { getCollectionByKey } from '@/api/index.js';
+import { DEFAULT_PRODUCT_ID } from '@/settings.js';
 
 export default {
   name: 'Product',
@@ -53,69 +40,34 @@ export default {
   data() {
     return {
       entries: [],
-      total: [],
-      label: '',
-      description: '',
+      total: 0,
+      isLoading: false,
     };
   },
   created() {
     this.fetchProducts();
-    console.log('created');
   },
   methods: {
-    getBannerClasses(ordering) {
-      if (ordering) {
-        return ordering.map(config => `col-${config.breakpoint}-order-${config.order}`).join(' ');
-      }
-      return '';
-    },
+    // getBannerClasses(ordering) {
+    //   if (ordering) {
+    //     return ordering.map(config => `col-${config.breakpoint}-order-${config.order}`).join(' ');
+    //   }
+    //   return '';
+    // },
     async fetchProducts() {
-      const key = this.$route.params.productId || 'rolls';
+      this.entries = [];
+      this.total = 0;
+      this.isLoading = true;
+
+      const key = this.$route.params.productId || DEFAULT_PRODUCT_ID;
       const { entries, total } = await getCollectionByKey(key);
-      const { description, label } = await getCollectionSchemaByKey(key);
       this.entries = entries;
       this.total = total;
-      this.description = description;
-      this.label = label;
+      this.isLoading = false;
     },
   },
-
-  // TODO отследить от
-  beforeRouteUpdate(to, from, next) {
-    this.fetchProducts();
-    next();
+  watch: {
+    $route: 'fetchProducts',
   },
 };
 </script>
-
-<style lang="scss">
-@import '~@/styles/_globals.scss';
-
-.shop-section {
-  padding-top: $base * 2;
-  &__about {
-    padding: $base * 2;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-  }
-  &__description {
-    p {
-      margin: 0;
-      line-height: 1.35;
-    }
-    * + p {
-      margin-top: 1em;
-    }
-  }
-  &__preview {
-    line-height: 0;
-  }
-  &__image {
-    max-width: 100%;
-    height: auto;
-  }
-}
-</style>

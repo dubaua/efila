@@ -42,7 +42,7 @@ export default {
     }
   }
   &__info {
-    padding: $base $base * 2;
+    padding: 16px 16px * 2;
     background-color: $color-background;
     @include from-breakpoint('md') {
       width: 320px;

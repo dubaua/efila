@@ -54,8 +54,8 @@ export default {
   background: $color-background--contrast;
 
   &__button {
-    max-width: $base * 4;
-    flex-basis: $base * 4;
+    max-width: 16px * 4;
+    flex-basis: 16px * 4;
     text-align: center;
     border: 0;
     background: none;

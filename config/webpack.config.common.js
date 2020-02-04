@@ -1,6 +1,5 @@
 'use strict';
 
-const webpack = require('webpack');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 const HtmlPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
@@ -15,8 +14,9 @@ const webpackConfig = {
   resolve: {
     extensions: ['.js', '.vue'],
     alias: {
-      vue$: isDev ? 'vue/dist/vue.esm.js' : 'vue/dist/vue.runtime.min.js',
+      vue$: isDev ? 'vue/dist/vue.runtime.js' : 'vue/dist/vue.runtime.min.js',
       '@': helpers.root('src'),
+      assets: helpers.root('src/assets'),
     },
   },
   module: {
@@ -59,18 +59,35 @@ const webpackConfig = {
         use: [{ loader: 'file-loader', options: { name: 'fonts/[name].[ext]' } }],
       },
       {
-        test: /\.(svg)(\?.*)?$/,
-        use: [{ loader: 'svg-sprite-loader', options: { runtimeCompat: true } }, { loader: 'svgo-loader' }],
+        test: /\.svg$/,
+        use: [
+          {
+            loader: 'svg-sprite-loader',
+            options: {
+              runtimeCompat: true,
+            },
+          },
+          'svgo-loader',
+        ],
+      },
+      {
+        test: /\.(jpg|png|gif)$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: '[name].[ext]',
+              outputPath: 'img/',
+              publicPath: 'img/',
+            },
+          },
+        ],
       },
     ],
   },
   plugins: [
     new VueLoaderPlugin(),
     new HtmlPlugin({ template: 'public/index.html', chunksSortMode: 'dependency' }),
-    new webpack.NormalModuleReplacementPlugin(
-      /element-ui[\/\\]lib[\/\\]locale[\/\\]lang[\/\\]zh-CN/,
-      'element-ui/lib/locale/lang/ru-RU',
-    ),
   ],
 };
 

@@ -16,6 +16,7 @@ export default {
   display: inline-block;
   line-height: 0;
   text-align: center;
+  color: inherit;
   .icon {
     margin-left: auto;
     margin-right: auto;

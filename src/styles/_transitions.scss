@@ -44,10 +44,10 @@ $transitions: (
   slide-right: (o: 1, x: -1, y: 0, d: 100%),
   slide-down: (o: 1, x: 0, y: -1, d: 100%),
   slide-left: (o: 1, x: 1, y: 0, d: 100%),
-  fade-up: (o: 0, x: 0, y: 1, d: $base * 2),
-  fade-right: (o: 0, x: -1, y: 0, d: $base * 2),
-  fade-down: (o: 0, x: 0, y: -1, d: $base * 2),
-  fade-left: (o: 0, x: 1, y: 0, d: $base * 2),
+  fade-up: (o: 0, x: 0, y: 1, d: 16px * 2),
+  fade-right: (o: 0, x: -1, y: 0, d: 16px * 2),
+  fade-down: (o: 0, x: 0, y: -1, d: 16px * 2),
+  fade-left: (o: 0, x: 1, y: 0, d: 16px * 2),
   fade: (o: 0, x: 0, y: 0, d: 0)
 );
 

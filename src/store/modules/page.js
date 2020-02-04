@@ -3,11 +3,13 @@ const state = {
   isMenuOpen: false,
   isCartOpen: false,
   isFrozen: false,
-  nextAction: '',
+  nextAction: null,
+  zoomedImage: null,
 };
 
 const getters = {
   isOverlayed: state => state.isCartOpen || state.isMenuOpen,
+  isZoomed: state => state.zoomedImage !== null,
 };
 
 const mutations = {
@@ -19,6 +21,12 @@ const mutations = {
   },
   scheduleAction(state, payload) {
     state.nextAction = payload;
+  },
+  zoomImage(state, payload) {
+    state.zoomedImage = payload;
+  },
+  closeImage(state) {
+    state.zoomedImage = null;
   },
 };
 
@@ -56,7 +64,7 @@ const actions = {
   dispatchNext({ state, commit, dispatch }) {
     if (state.nextAction) {
       dispatch(state.nextAction);
-      commit('scheduleAction', '');
+      commit('scheduleAction', null);
     }
   },
 };

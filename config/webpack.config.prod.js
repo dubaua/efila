@@ -5,7 +5,6 @@ const merge = require('webpack-merge');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
-const CompressionPlugin = require('compression-webpack-plugin');
 const helpers = require('./helpers');
 const commonConfig = require('./webpack.config.common');
 const isProd = process.env.NODE_ENV === 'production';
@@ -16,10 +15,14 @@ const webpackConfig = merge(commonConfig, {
   output: {
     path: helpers.root('dist'),
     publicPath: '/',
-    filename: 'js/[hash].js',
+    filename: 'js/[name].[hash].js',
   },
   optimization: {
+    // отключили чанки для более быстрой заливки
+    // приложение используется малым количеством пользователей
+    // и редко скачивается заново, поэтому чанки неэффективны
     runtimeChunk: false,
+    minimize: true,
     minimizer: [
       new OptimizeCSSAssetsPlugin({
         cssProcessorPluginOptions: {
@@ -37,13 +40,6 @@ const webpackConfig = merge(commonConfig, {
     new webpack.EnvironmentPlugin(environment),
     new MiniCSSExtractPlugin({
       filename: 'css/[name].[hash].css',
-    }),
-    new CompressionPlugin({
-      filename: '[path].gz[query]',
-      algorithm: 'gzip',
-      test: new RegExp('\\.(js|css)$'),
-      threshold: 10240,
-      minRatio: 0.8,
     }),
     new webpack.HashedModuleIdsPlugin(),
   ],

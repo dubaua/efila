@@ -73,9 +73,9 @@ export default {
   }
 
   &__title {
-    margin: 0 $base $base;
-    padding: $base 0;
-    font-size: $base;
+    margin: 0 16px 16px;
+    padding: 16px 0;
+    font-size: 16px;
     text-align: center;
   }
 
@@ -83,7 +83,7 @@ export default {
     flex-grow: 1;
     max-height: 100%;
     overflow-y: auto;
-    padding-bottom: $base;
+    padding-bottom: 16px;
   }
 }
 </style>

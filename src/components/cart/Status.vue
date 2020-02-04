@@ -29,7 +29,7 @@ export default {
 
 .cart-status {
   margin-top: auto;
-  padding: $base;
+  padding: 16px;
   text-align: center;
 }
 </style>

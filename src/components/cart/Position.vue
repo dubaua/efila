@@ -39,7 +39,7 @@ export default {
 @import '~@/styles/_globals.scss';
 .position {
   $block: &;
-  margin-bottom: $base;
+  margin-bottom: 16px;
 
   &__button {
     display: inline-block;
@@ -51,9 +51,9 @@ export default {
   }
   &__status {
     text-align: right;
-    margin-top: $base * 0.25;
+    margin-top: 16px * 0.25;
     * {
-      margin: 0 $base * 0.5;
+      margin: 0 16px * 0.5;
     }
   }
   &--compact {
@@ -73,12 +73,12 @@ export default {
       #{$block}__title {
         background: $color-background;
         position: relative;
-        padding-right: $base * 0.5;
+        padding-right: 16px * 0.5;
       }
       #{$block}__status {
         background: $color-background;
         position: relative;
-        padding-left: $base * 0.5;
+        padding-left: 16px * 0.5;
         margin-top: 0;
       }
     }

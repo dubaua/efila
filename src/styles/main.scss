@@ -1,15 +1,28 @@
-@import url('https://fonts.googleapis.com/css?family=Anonymous+Pro:400,700&display=swap&subset=cyrillic');
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Sans:300,400&display=swap&text=%E2%82%BD');
-@import "_grid.scss";
-@import "_colors.scss";
-@import "_globals.scss";
-@import "_transitions.scss";
-@import "_typography.scss";
+@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Serif:400,400i,500,600,700|Rubik:400,700&display=swap&subset=cyrillic');
+@import '_grid.scss';
+@import '_colors.scss';
+@import '_globals.scss';
+@import '_transitions.scss';
+@import '_typography.scss';
 
 html {
   overflow-y: scroll;
   min-width: 100vh;
-  font-family: $font--body;
+  font-family: $font-body;
+}
+
+.currentColor {
+  fill: currentColor;
+}
+
+.color-text-900 {
+  color: $color-gray-900;
+  fill: $color-gray-900;
+}
+
+.contrast .color-text-900 {
+  color: $color-gray-contrast-900;
+  fill: $color-gray-contrast-900;
 }
 
 .color-text {

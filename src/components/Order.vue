@@ -148,15 +148,15 @@ export default {
 @import '~@/styles/_globals.scss';
 
 .form {
-  padding: 0 $base * 2 $base;
+  padding: 0 16px * 2 16px;
   & .form-group + .form-group {
-    margin-top: $base * 0.5;
+    margin-top: 16px * 0.5;
   }
 
   & fieldset {
     border: 0;
     padding: 0;
-    margin: 0 0 $base * 0.5;
+    margin: 0 0 16px * 0.5;
   }
   & label {
     display: none;
@@ -164,11 +164,11 @@ export default {
   & input,
   & textarea {
     box-sizing: border-box;
-    padding: $base * 0.25 $base * 0.5;
+    padding: 16px * 0.25 16px * 0.5;
     width: 100%;
     background: $color-background;
     border: 1px solid $color-unactive;
-    border-radius: $base * 0.25;
+    border-radius: 16px * 0.25;
 
     &:focus {
       outline: none;

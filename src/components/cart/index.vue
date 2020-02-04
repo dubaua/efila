@@ -1,6 +1,6 @@
 <template>
   <div class="cart">
-    <div v-if="totalAmount === 0" class="cart__empty">Корзина пока что, пуста ;(</div>
+    <div v-if="totalAmount === 0" class="cart__empty">Корзина пуста</div>
     <div v-else class="cart__filled">
       <div class="cart__contents">
         <position v-for="position in cart" :key="position.id" :position="position" :is-compact="isCompact" />
@@ -15,13 +15,11 @@
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
-import Order from '@/components/Order';
 import Position from './Position';
 
 export default {
   name: 'Cart',
   components: {
-    Order,
     Position,
   },
   props: {
@@ -48,24 +46,24 @@ export default {
 .cart {
   display: flex;
   flex-direction: column;
-  padding: $base;
+  padding: 16px;
   &__empty {
     text-align: center;
   }
 
   &__filled {
-    padding: 0 $base;
+    padding: 0 16px;
   }
 
   &__total {
     display: flex;
     justify-content: space-between;
     border-top: 1px solid rgba($color-text--contrast, 0.2);
-    margin: $base 0;
-    padding-top: $base;
+    margin: 16px 0;
+    padding-top: 16px;
   }
   &__total-sum {
-    /* padding-right: $base * 2.5; */
+    /* padding-right: 16px * 2.5; */
   }
 }
 </style>

@@ -22,7 +22,7 @@ export default {
 <style lang="scss">
 @import '~@/styles/_globals.scss';
 .info {
-  padding: $base;
+  padding: 16px;
 
   @include from-breakpoint('lg') {
     background: none;
@@ -30,7 +30,7 @@ export default {
 
   p {
     text-align: center;
-    margin: 0 0 $base;
+    margin: 0 0 16px;
 
     a {
       color: inherit;
