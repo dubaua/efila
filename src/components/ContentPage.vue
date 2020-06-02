@@ -3,7 +3,6 @@
     <template v-if="ymapURL">
       <div class="content-page__article content-page__article--compact">
         <div class="typography" v-html="content" />
-        <call-me-back v-if="showCallbackForm" />
       </div>
       <div class="content-page__map">
         <iframe :src="sanitizedYMapURL" frameborder="0" class="content-page__map-iframe" />
@@ -11,25 +10,19 @@
     </template>
     <div v-else class="content-page__article">
       <div class="typography" v-html="content" />
-      <call-me-back v-if="showCallbackForm" />
     </div>
   </div>
 </template>
 
 <script>
 import { getSingletonByKey } from '@/api/index.js';
-import CallMeBack from '@/components/CallMeBack.vue';
 
 export default {
   name: 'ContentPage',
-  components: {
-    CallMeBack,
-  },
   data() {
     return {
       content: null,
       ymapURL: null,
-      showCallbackForm: null,
     };
   },
   computed: {
@@ -53,10 +46,9 @@ export default {
   methods: {
     async fetchContent() {
       const key = this.$route.params.pageId;
-      const { content, ymapURL, showCallbackForm } = await getSingletonByKey(key);
+      const { content, ymapURL } = await getSingletonByKey(key);
       this.content = content;
       this.ymapURL = ymapURL || null;
-      this.showCallbackForm = showCallbackForm || null;
     },
   },
 };

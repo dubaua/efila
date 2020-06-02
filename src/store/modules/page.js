@@ -3,6 +3,7 @@ import { MOBILE_THRESHOLD } from '@/settings.js';
 const state = {
   isMenuOpen: false,
   isCartOpen: false,
+  isCallMeBackOpen: false,
   isFrozen: false,
   zoomedImage: null,
   nextAction: null,
@@ -10,7 +11,7 @@ const state = {
 };
 
 const getters = {
-  isOverlayed: (state) => state.isCartOpen || state.isMenuOpen || state.zoomedImage !== null,
+  isOverlayed: (state) => state.isCartOpen || state.isMenuOpen || state.isCallMeBackOpen || state.zoomedImage !== null,
 };
 
 const mutations = {
@@ -19,6 +20,9 @@ const mutations = {
   },
   setCart(state, payload) {
     state.isCartOpen = payload;
+  },
+  setCallMeBack(state, payload) {
+    state.isCallMeBackOpen = payload;
   },
   scheduleAction(state, payload) {
     state.nextAction = payload;
@@ -50,9 +54,19 @@ const actions = {
   toggleCart({ state, commit }) {
     commit('setCart', !state.isCartOpen);
   },
+  openCallMeBack({ commit }) {
+    commit('setCallMeBack', true);
+  },
+  closeCallMeBack({ commit }) {
+    commit('setCallMeBack', false);
+  },
+  toggleCallMeBack({ state, commit }) {
+    commit('setCallMeBack', !state.isCallMeBackOpen);
+  },
   closeAll({ commit }) {
     commit('setCart', false);
     commit('setMenu', false);
+    commit('setCallMeBack', false);
     commit('setZoomedImage', null);
   },
   scheduleAction({ state, commit, dispatch }, { next, blocking }) {

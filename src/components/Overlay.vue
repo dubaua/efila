@@ -8,7 +8,7 @@
 
 <script>
 import Icon from '@/components/icon/Icon.vue';
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from 'vuex';
 import { disableDocumentScroll, enableDocumentScroll } from '@/utils/documentScroll.js';
 
 export default {

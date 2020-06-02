@@ -1,6 +1,6 @@
 <template>
   <div class="call-me-back">
-    <form ref="form" class="call-me-back form form--contrast" @submit.prevent="send">
+    <form ref="form" class="call-me-back form" @submit.prevent="send">
       <h1>Перезвоните мне</h1>
       <vue-form-generator :schema="schema" :model="model" :options="formOptions" />
       <base-button size="wide" :disabled="isSending || isSent">Запросить звонок</base-button>
@@ -21,6 +21,7 @@
 <script>
 import BaseButton from '@/components/base-button/BaseButton.vue';
 import { sendForm } from '@/api/index.js';
+import { mapMutations } from 'vuex';
 
 function initFormState() {
   return {
@@ -70,12 +71,12 @@ export default {
     };
   },
   methods: {
+    ...mapMutations(['setCallMeBack']),
     clearForm() {
       this.model = initFormState();
     },
     async send() {
       this.isSending = true;
-
       const { success, message } = await sendForm({ url: '/callback.php', form: this.model });
       this.isSending = false;
 
@@ -86,6 +87,7 @@ export default {
         this.message = '';
         this.isSent = false;
         this.clearForm();
+        this.setCallMeBack(false);
       }, 3000);
     },
   },
@@ -96,10 +98,9 @@ export default {
 @import '~@/styles/_globals.scss';
 
 .call-me-back {
-  margin-top: 2em;
-  padding: 0;
   min-height: 0;
   &__sent {
+    padding: 0 24px;
     margin-top: 1em;
     &--positive {
       color: $--color-positive;

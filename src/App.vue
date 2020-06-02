@@ -6,6 +6,7 @@
     <template v-if="page.isMobile">
       <slide-in direction="right" :is-active="page.isMenuOpen" swipe-action="closeMenu">
         <the-menu :items="menuItems" />
+        <button class="call-me-back-button call-me-back-button--mobile" @click="openCallMeBack">Заказать звонок</button>
       </slide-in>
       <slide-in direction="left" :is-active="page.isCartOpen" swipe-action="closeCart" title="Ваш заказ">
         <cart is-contrast />
@@ -18,6 +19,7 @@
       <aside class="desktop-panel">
         <logo class="desktop-panel__logo" />
         <info />
+        <button class="call-me-back-button" @click="openCallMeBack">Заказать звонок</button>
         <div class="desktop-panel__cart">
           <cart />
           <status />
@@ -36,6 +38,11 @@
         <empty-cart />
       </div>
     </transition>
+    <transition name="fade">
+      <div v-if="page.isCallMeBackOpen" class="call-me-back-popup">
+        <call-me-back />
+      </div>
+    </transition>
     <zoom />
   </div>
 </template>
@@ -44,6 +51,7 @@
 import { mapActions, mapGetters, mapMutations, mapState } from 'vuex';
 import { debounce } from 'throttle-debounce';
 import AppFooter from '@/components/AppFooter.vue';
+import CallMeBack from '@/components/CallMeBack.vue';
 import Cart from '@/components/cart/Cart.vue';
 import EmptyCart from '@/components/EmptyCart.vue';
 import Info from '@/components/Info.vue';
@@ -55,22 +63,23 @@ import Status from '@/components/cart/Status.vue';
 import TheMenu from '@/components/TheMenu.vue';
 import Zoom from '@/components/Zoom.vue';
 import { MOBILE_THRESHOLD } from '@/settings.js';
-import { getCollectionByKey, sendForm } from '@/api/index.js';
+import { getCollectionByKey } from '@/api/index.js';
 
 export default {
   name: 'App',
   components: {
-    Cart,
-    Order,
-    Status,
     AppFooter,
-    Logo,
+    CallMeBack,
+    Cart,
+    EmptyCart,
     Info,
+    Logo,
+    Order,
+    Overlay,
+    SlideIn,
+    Status,
     TheMenu,
     Zoom,
-    EmptyCart,
-    SlideIn,
-    Overlay,
   },
   data() {
     return {
@@ -110,6 +119,9 @@ export default {
     },
     onWindowSizeChange() {
       this.setMobile(window.innerWidth < MOBILE_THRESHOLD);
+    },
+    openCallMeBack() {
+      this.scheduleAction({ next: 'openCallMeBack', blocking: 'Menu' });
     },
   },
 };
@@ -151,6 +163,24 @@ $panel-width: 320px;
   }
 }
 
+.call-me-back-button {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: underline;
+  &--mobile {
+    font-size: $--font-size-200;
+    color: inherit;
+    text-decoration: none;
+    padding: 12px 16px;
+  }
+}
+
 .desktop-header {
   position: fixed;
   left: 0;
@@ -177,5 +207,21 @@ $panel-width: 320px;
     font-size: $--font-size-300;
     font-family: $--font-face-title;
   }
+}
+
+.call-me-back-popup {
+  $popup-width: 480px;
+  position: fixed;
+  box-sizing: border-box;
+  top: 5vh;
+  left: 50%;
+  transform: translate(-50%, 0);
+  max-width: $popup-width;
+  max-height: 90vh;
+  width: 100%;
+  padding: 16px;
+  overflow: auto;
+  background: $--color-gray-50;
+  color: $--color-gray-900;
 }
 </style>
