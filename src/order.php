@@ -170,8 +170,6 @@ $message .= $orderTable;
 
 $messageSent = sendEmail($address, $fromName, $fromAdderss, $subject, $message);
 
-$lastPosition = null;
-
 if ($haveToSaveOrders) {
 
   foreach ($processedOrderArray as $key => $position) {
@@ -196,5 +194,4 @@ if ($haveToSaveOrders) {
 
 echo json_encode(array(
   "success" => $messageSent,
-  "lastPosition" => $lastPosition,
 ));
