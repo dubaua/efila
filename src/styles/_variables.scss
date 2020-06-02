@@ -1,0 +1,66 @@
+$--font-face-title: 'Rubik', serif;
+$--font-face-body: 'Rubik', serif;
+
+$--font-size-50: 12px;
+$--font-size-75: 14px;
+$--font-size-100: 16px;
+$--font-size-200: 22px;
+$--font-size-300: 24px;
+
+$--hue: 18;
+$--hue-accent: 198;
+$--color-primary-400: hsl($--hue, 100%, 48%);
+$--color-primary-500: darken(desaturate($--color-primary-400, 2), 4);
+$--color-primary-600: darken(desaturate($--color-primary-400, 4), 6);
+$--color-gray-contrast-50: hsl($--hue-accent, 9%, 15%);
+$--color-gray-contrast-75: hsl($--hue-accent, 9%, 18%);
+$--color-gray-contrast-100: hsl($--hue-accent, 8%, 20%);
+$--color-gray-contrast-200: hsl($--hue-accent, 8%, 24%);
+$--color-gray-contrast-300: hsl($--hue-accent, 8%, 29%);
+$--color-gray-contrast-400: hsl($--hue-accent, 8%, 35%);
+$--color-gray-contrast-500: hsl($--hue-accent, 7%, 43%);
+$--color-gray-contrast-600: hsl($--hue-accent, 6%, 56%);
+$--color-gray-contrast-700: hsl($--hue-accent, 5%, 73%);
+$--color-gray-contrast-800: hsl($--hue-accent, 3%, 89%);
+$--color-gray-contrast-900: hsl($--hue-accent, 0%, 100%);
+$--color-gray-50: hsl($--hue-accent, 0%, 100%);
+$--color-gray-75: hsl($--hue-accent, 1%, 98%);
+$--color-gray-100: hsl($--hue-accent, 2%, 96%);
+$--color-gray-200: hsl($--hue-accent, 2%, 92%);
+$--color-gray-300: hsl($--hue-accent, 3%, 88%);
+$--color-gray-400: hsl($--hue-accent, 4%, 79%);
+$--color-gray-500: hsl($--hue-accent, 5%, 70%);
+$--color-gray-600: hsl($--hue-accent, 6%, 56%);
+$--color-gray-700: hsl($--hue-accent, 7%, 43%);
+$--color-gray-800: hsl($--hue-accent, 8%, 29%);
+$--color-gray-900: hsl($--hue-accent, 9%, 17%);
+$--color-background: $--color-gray-50;
+$--color-background--contrast: $--color-gray-900;
+$--color-background--panel: $--color-gray-75;
+$--color-unactive: hsl($--hue, 10%, 65%);
+$--color-background-unactive: hsl($--hue, 10%, 95%);
+$--color-focus: hsl($--hue-accent, 100%, 50%);
+$--color-positive: green;
+$--color-negative: red;
+
+$--timing-in-out-cubic: cubic-bezier(0.62, 0, 0.38, 1);
+
+$--duration-0: 0ms;
+$--duration-100: 130ms;
+$--duration-200: 160ms;
+$--duration-300: 190ms;
+$--duration-400: 220ms;
+$--duration-500: 250ms;
+$--duration-600: 300ms;
+$--duration-700: 350ms;
+$--duration-800: 400ms;
+$--duration-900: 450ms;
+$--duration-1000: 500ms;
+$--duration-1500: 750ms;
+$--duration-2000: 1000ms;
+$--duration-4000: 2000ms;
+
+$--header-height: 56px;
+$--footer-height: 56px;
+
+$--min-form-height: 250px;

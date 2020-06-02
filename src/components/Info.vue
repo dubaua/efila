@@ -22,19 +22,22 @@ export default {
 <style lang="scss">
 @import '~@/styles/_globals.scss';
 .info {
-  padding: 16px;
+  padding: 12px 24px;
 
-  @include from-breakpoint('lg') {
+  @include from('lg') {
     background: none;
   }
 
-  p {
-    text-align: center;
-    margin: 0 0 16px;
+  & > * {
+    margin: 0;
+  }
 
-    a {
-      color: inherit;
-    }
+  & > * + * {
+    margin-top: 1em;
+  }
+
+  a {
+    color: inherit;
   }
 }
 </style>

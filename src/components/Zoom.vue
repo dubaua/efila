@@ -1,15 +1,16 @@
 <template>
-  <div v-if="isActive" ref="zoomContainer" class="zoom">
-    <img ref="zoomImage" class="zoom__image" :src="src" @click="zoomOut" />
+  <div v-show="isActive" ref="zoomContainer" class="zoom">
+    <img ref="zoomImage" class="zoom__image" :src="src" />
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex';
+import { mapMutations } from 'vuex';
 import createObservable from 'create-observable';
 import animate from '@/utils/animate.js';
-import * as ez from '@/utils/easings.js';
-import { EventBus } from '@/utils/index.js';
+import { easingOutCirc } from '@/utils/easings.js';
+
+const zoomDuration = 314;
 
 function rotateEasing(p) {
   const state = Math.ceil(p * 3);
@@ -42,22 +43,31 @@ export default {
       isActive: false,
     };
   },
-  mounted() {
-    EventBus.$on('zoom-image', zoomImageNode => {
-      this.zoomIn(zoomImageNode);
-    });
-  },
   computed: {
-    ...mapState(['page']),
-    ...mapGetters(['isZoomed']),
+    zoomedImage() {
+      return this.$store.state.page.zoomedImage;
+    },
+  },
+  watch: {
+    zoomedImage(zoomImageNode) {
+      if (zoomImageNode) {
+        this.zoomIn(zoomImageNode);
+      } else {
+        this.zoomOut();
+      }
+    },
+  },
+  mounted() {
+    document.addEventListener('keyup', this.keyPressed);
+  },
+  beforeDestroy() {
+    document.removeEventListener('keyup', this.keyPressed);
   },
   methods: {
-    ...mapActions(['closeImage']),
     zoomIn(zoomImageNode) {
       this.originNode = zoomImageNode;
-      this.isActive = true;
 
-      const { src, naturalWidth, naturalHeight } = zoomImageNode;
+      const { src, naturalWidth } = zoomImageNode;
       const { x: _x, y: _y, left, top, width, height } = zoomImageNode.getBoundingClientRect();
       // x,y doesn't work in IE
       const x = _x || left;
@@ -79,9 +89,9 @@ export default {
       const deltaProgress = 1 - this.progress.value;
 
       this.animation = animate({
-        duration: 314,
-        easing: t => t,
-        draw: p => {
+        duration: zoomDuration,
+        easing: (t) => t,
+        draw: (p) => {
           this.progress.value = startProgress + p * deltaProgress;
         },
         onComplete: () => {
@@ -94,24 +104,27 @@ export default {
     },
 
     zoomOut() {
-      this.animation.togglePause(true);
+      if (this.animation) {
+        this.animation.togglePause(true);
+      }
 
       const startProgress = this.progress.value;
       const deltaProgress = 0 - this.progress.value;
 
       this.animation = animate({
-        duration: 314,
-        easing: t => t,
-        draw: p => (this.progress.value = startProgress + p * deltaProgress),
+        duration: zoomDuration,
+        easing: (t) => t,
+        draw: (p) => (this.progress.value = startProgress + p * deltaProgress),
         onComplete: () => {
           this.progress.value = 0;
-          this.isActive = false;
         },
         onCancel: ({ progress }) => (this.progress.value = progress),
       });
     },
 
     drawImageZoomPopup(progress) {
+      this.isActive = progress > 0;
+
       const { startWidth, endWidth } = this.imageSizes;
 
       this.$refs.zoomImage.width = startWidth + Math.ceil((endWidth - startWidth) * progress);
@@ -121,9 +134,16 @@ export default {
       const translateX = (1 - progress) * x;
       const translateY = (1 - progress) * y;
 
-      const rotate = ez.easingOutCirc(rotateEasing(progress)) * 3;
+      const rotate = easingOutCirc(rotateEasing(progress)) * 3;
 
       this.$refs.zoomContainer.style.transform = `translate(${translateX}px,${translateY}px) rotate(${rotate}deg)`;
+    },
+
+    keyPressed({ key, code }) {
+      const _code = code || key;
+      if (_code === 'Escape' && this.animation !== null) {
+        this.zoomOut();
+      }
     },
   },
 };

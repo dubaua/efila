@@ -1,13 +1,14 @@
-@import "_colors.scss";
+@import '~@/styles/_globals.scss';
 
 $hamburger-padding-x: 20px !default;
 $hamburger-padding-y: 13px !default;
 $hamburger-layer-width: 28px !default;
 $hamburger-layer-height: 3px !default;
 $hamburger-layer-spacing: 7px !default;
-$hamburger-layer-color: $color-text--contrast !default;
+$hamburger-layer-color: $--color-gray-50 !default;
 $hamburger-hover-transition-duration: 0.15s !default;
 $hamburger-hover-transition-timing-function: linear !default;
+$hamburger-border-radius: 0px;
 
 .hamburger {
   padding: $hamburger-padding-y $hamburger-padding-x;
@@ -44,8 +45,8 @@ $hamburger-hover-transition-timing-function: linear !default;
   &::after {
     width: $hamburger-layer-width;
     height: $hamburger-layer-height;
-    border-radius: 3px;
     background-color: $hamburger-layer-color;
+    border-radius: $hamburger-border-radius;
     position: absolute;
     transition-property: transform;
     transition-duration: 0.15s;
@@ -54,7 +55,7 @@ $hamburger-hover-transition-timing-function: linear !default;
 
   &::before,
   &::after {
-    content: "";
+    content: '';
     display: block;
   }
 
@@ -77,8 +78,7 @@ $hamburger-hover-transition-timing-function: linear !default;
     }
 
     &::after {
-      transition: bottom 0.075s 0.12s ease,
-        transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+      transition: bottom 0.075s 0.12s ease, transform 0.075s cubic-bezier(0.55, 0.055, 0.675, 0.19);
     }
   }
 
@@ -97,8 +97,7 @@ $hamburger-hover-transition-timing-function: linear !default;
       &::after {
         bottom: 0;
         transform: rotate(-90deg);
-        transition: bottom 0.075s ease,
-          transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
+        transition: bottom 0.075s ease, transform 0.075s 0.12s cubic-bezier(0.215, 0.61, 0.355, 1);
       }
     }
   }

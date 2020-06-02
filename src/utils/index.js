@@ -1,7 +1,3 @@
-import Vue from 'vue';
-
-export const EventBus = new Vue();
-
 export const numberWithSpaces = number => number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 
 export function addClassToElement(el, className) {

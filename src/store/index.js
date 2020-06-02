@@ -9,7 +9,7 @@ Vue.use(Vuex);
 const debug = process.env.NODE_ENV !== 'production';
 
 const vuexPersist = new VuexPersist({
-  key: '__VUEX_PERSIST__',
+  key: '__VUEX_PERSIST_DVIJ__',
   strictMode: debug,
   storage: window.localStorage,
   modules: ['cart'],

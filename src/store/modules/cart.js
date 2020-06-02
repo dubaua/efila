@@ -2,55 +2,45 @@ import Vue from 'vue';
 
 const state = {};
 
-// helpers
-const createProduct = p => ({
-  _id: p._id,
-  cartId: p.versions ? `${p._id}_ver${p.versions[p.chosenVersion].id}` : p._id,
-  amount: 1,
-  price: p.versions ? p.versions[p.chosenVersion].price : p.price,
-  title: p.title,
-  details: p.versions ? p.versions[p.chosenVersion].measure : p.details ? p.details : '',
-});
-
-// getters
 const getters = {
-  totalCost: state => Object.keys(state).reduce((sum, cartId) => sum + state[cartId].price * state[cartId].amount, 0),
-  totalAmount: state => Object.keys(state).reduce((sum, cartId) => sum + state[cartId].amount, 0),
-  amountInCart: state => id => (state[id] ? state[id].amount : 0),
+  totalCost: (state) =>
+    Object.keys(state).reduce(
+      (sum, cartProductId) => sum + state[cartProductId].price * state[cartProductId].amount,
+      0,
+    ),
+  totalAmount: (state) => Object.keys(state).reduce((sum, cartProductId) => sum + state[cartProductId].amount, 0),
+  getAmountInCardById: (state) => (cartProductId) => (state[cartProductId] ? state[cartProductId].amount : 0),
 };
 
-// actions
 const actions = {
   addToCart({ state, commit }, product) {
-    const position = createProduct(product);
-    if (typeof state[position.cartId] !== 'undefined') {
-      commit('changeAmount', { cartId: position.cartId, modifier: 1 });
+    if (typeof state[product.cartProductId] !== 'undefined') {
+      commit('changeAmount', { cartProductId: product.cartProductId, modifier: 1 });
     } else {
-      commit('addToCart', position);
+      commit('addToCart', { ...product, amount: 1 });
     }
   },
-  changeAmount({ state, commit }, { cartId, modifier }) {
-    if (state[cartId].amount === -modifier) {
-      commit('removeFromCart', cartId);
+  changeAmount({ state, commit }, { cartProductId, modifier }) {
+    if (state[cartProductId].amount === -modifier) {
+      commit('removeFromCart', cartProductId);
     } else {
-      commit('changeAmount', { cartId, modifier });
+      commit('changeAmount', { cartProductId, modifier });
     }
   },
 };
 
-// mutations
 const mutations = {
-  addToCart(state, position) {
-    Vue.set(state, position.cartId, position);
+  addToCart(state, product) {
+    Vue.set(state, product.cartProductId, product);
   },
-  removeFromCart(state, cartId) {
-    Vue.delete(state, cartId);
+  removeFromCart(state, cartProductId) {
+    Vue.delete(state, cartProductId);
   },
   clearCart(state) {
-    Object.keys(state).forEach(cartId => Vue.delete(state, cartId));
+    Object.keys(state).forEach((cartProductId) => Vue.delete(state, cartProductId));
   },
-  changeAmount(state, { cartId, modifier }) {
-    state[cartId].amount += modifier;
+  changeAmount(state, { cartProductId, modifier }) {
+    state[cartProductId].amount += modifier;
   },
 };
 

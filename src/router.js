@@ -1,18 +1,19 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import ContactAndDelivery from '@/components/ContactAndDelivery.vue';
-import Product from '@/components/product/index.vue';
+import ContentPage from '@/components/ContentPage.vue';
+import Product from '@/components/product/Product.vue';
+import store from '@/store/index.js';
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/contact-and-delivery',
-      name: 'ContactAndDelivery',
-      component: ContactAndDelivery,
+      path: '/pages/:pageId',
+      name: 'Page',
+      component: ContentPage,
     },
     {
       path: '/:productId',
@@ -26,3 +27,12 @@ export default new Router({
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  if (store.getters.isOverlayed) {
+    store.dispatch('closeAll');
+  }
+  next();
+});
+
+export default router;

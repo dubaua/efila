@@ -1,78 +1,131 @@
 <template>
   <div class="card">
     <div class="card__preview">
-      <div class="card__tags">
-        <div v-for="tag in tags" :key="tag" class="card__tag" :class="getTag(tag)">{{ tag }}</div>
-      </div>
-      <img ref="productImage" :src="product.photo.path" :alt="product.title" @click="zoomImage" />
+      <img ref="productImage" class="card__zoom" :src="baseURL + photoUrl" :alt="product.title" @click="zoomImage" />
     </div>
     <div class="card__details">
       <h2>{{ product.title }}</h2>
       <p>{{ product.description }}</p>
-      <p>{{ product.measure }}</p>
-      <p>{{ product.calories }} кКал</p>
-
+      <div class="card__options">
+        <console v-if="isSizeSwitchable" :options="product.sizes" label-key="sizeName" @change="setSizeIndex" />
+        <p v-else>{{ chosenSize.sizeName }}</p>
+      </div>
+      <div v-if="chosenSize.options" class="card__options">
+        <console
+          v-if="isOptionsSwitchable"
+          :options="chosenSize.options"
+          label-key="optionName"
+          @change="setOptionIndex"
+        />
+        <p v-else>{{ chosenSize.options[optionIndex].optionName }}</p>
+      </div>
       <div class="card__action">
-        <div class="card__price">{{ price }} ₽</div>
-        <base-button class="card__button button--wide" @click="addToCart(product)">
-          {{ amount > 0 ? 'в корзине ' + amount : 'в корзину' }}
-        </base-button>
+        <div class="card__price">{{ numberWithSpaces(price) }} ₽</div>
+        <drive-button class="card__button button--wide" :active="amount > 0" @click="handleAddToCard(product)">
+          <template #initial>
+            Добавить
+          </template>
+          <template #active>
+            {{ `В корзине ${amount}` }}
+          </template>
+        </drive-button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapMutations } from 'vuex';
-import { numberWithSpaces } from '@/utils';
-import { EventBus } from '@/utils/index.js';
+import Console from '@/components/Console.vue';
+import DriveButton from '@/components/base-button/DriveButton.vue';
+import { mapActions, mapMutations, mapState } from 'vuex';
+import { numberWithSpaces } from '@/utils/index.js';
+import { DEFAULT_PRODUCT_ID } from '@/settings.js';
+import { baseURL } from '@/api/index.js';
 
-/* eslint-disable no-underscore-dangle */
 export default {
   name: 'Card',
+  components: {
+    Console,
+    DriveButton,
+  },
   props: {
-    product: Object,
+    product: {
+      type: Object,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      baseURL,
+      sizeIndex: 0,
+      optionIndex: 0,
+    };
   },
   computed: {
-    isSimpleProduct() {
-      return typeof this.product.versions !== 'object';
+    ...mapState(['page']),
+    photoUrl() {
+      return this.chosenSize.photo ? this.chosenSize.photo.path : '';
     },
-    price() {
-      return this.isSimpleProduct
-        ? numberWithSpaces(this.product.price)
-        : numberWithSpaces(this.product.versions[this.product.chosenVersion].price);
+    chosenSize() {
+      return this.product.sizes[this.sizeIndex];
     },
-    currentProduct() {
-      return this.$route.params.productId || 'pizza';
+    isSizeSwitchable() {
+      return this.product.sizes.length > 1;
     },
-    versionId() {
-      return this.product._id + (this.isSimpleProduct ? '' : `_ver${this.product.chosenVersion}`);
+    isOptionsSwitchable() {
+      return this.chosenSize.options.length > 1;
+    },
+    cartProductId() {
+      const optionSuffix = this.chosenSize.options ? `-${this.optionIndex}` : '';
+      return `${this.product.categoryId}-${this.product._id}-${this.sizeIndex}${optionSuffix}`;
     },
     amount() {
-      return this.$store.getters.amountInCart(this.versionId);
+      return this.$store.getters.getAmountInCardById(this.cartProductId);
     },
-    tags() {
-      return this.product.tags.filter(tag => tag !== '');
+    price() {
+      const extraCharge = this.chosenSize.options ? this.chosenSize.options[this.optionIndex].extraCharge : 0;
+      return this.chosenSize.price + extraCharge;
     },
   },
   methods: {
-    ...mapMutations(['zoomImage']),
     ...mapActions(['addToCart']),
-    // actually this is action creator
-    setVersion(versionId) {
-      if (this.product.chosenVersion !== versionId) {
-        this.$store.commit('setVersion', {
-          product: this.currentProduct,
-          productId: this.product._id,
-          versionId,
-        });
+    ...mapMutations(['setZoomedImage']),
+    numberWithSpaces,
+    zoomImage() {
+      if (!this.page.isMobile) {
+        this.setZoomedImage(this.$refs.productImage);
       }
     },
-    getTag(tag) {
+    getTagClassName(tag) {
       return `card__tag--${tag}`;
     },
-    zoomImage() {
-      EventBus.$emit('zoom-image', this.$refs.productImage);
+    setSizeIndex(sizeIndex) {
+      this.sizeIndex = sizeIndex;
+    },
+    setOptionIndex(optionIndex) {
+      this.optionIndex = optionIndex;
+    },
+    handleAddToCard(product) {
+      const { _id, categoryId, title } = product;
+      const {
+        cartProductId,
+        sizeIndex,
+        optionIndex,
+        price,
+        chosenSize: { sizeName, options },
+      } = this;
+      const optionName = options ? options[optionIndex].optionName : '';
+      this.addToCart({
+        cartProductId,
+        productId: _id,
+        categoryId,
+        sizeIndex,
+        optionIndex,
+        title,
+        price,
+        sizeName,
+        optionName,
+      });
     },
   },
 };
@@ -83,12 +136,11 @@ export default {
 
 .card {
   $block: &;
-
   display: flex;
   flex-direction: column;
-  height: calc(100% - 16px);
-  margin-bottom: 16px;
   box-sizing: border-box;
+  height: calc(100% - 20px);
+  margin: 0 0 20px;
 
   &__preview {
     position: relative;
@@ -100,20 +152,32 @@ export default {
     }
   }
 
+  &__zoom {
+    cursor: zoom-in;
+  }
+
   &__details {
     flex-grow: 1;
-    padding: 8px 16px;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
 
     h2 {
       margin: 0 0 10px;
-      font: normal 32px/1 $font-body;
+      font-family: $--font-face-title;
+      font-size: $--font-size-300;
+      line-height: 1.2;
       font-weight: normal;
     }
     p {
       margin: 0 0 10px;
-      color: $color-gray-700;
-      font: normal 16px/1.38 $font-body;
+      color: $--color-gray-contrast-700;
+      font: normal 16px/1.38 $--font-face-body;
     }
+  }
+
+  &__options {
+    margin-bottom: 16px;
   }
 
   &__action {
@@ -124,24 +188,18 @@ export default {
   }
 
   &__price {
-    font-size: 32px;
+    font-size: $--font-size-300;
+    max-width: 38%;
   }
 
   &__button {
-    max-width: 50%;
-  }
-
-  &__tags {
-    position: absolute;
-    top: 16px * -1.25;
-    right: 16px * -1.25;
-    display: flex;
+    max-width: 62%;
   }
 
   &__tag {
-    background: $color-background--contrast;
-    color: $color-text--contrast;
-    font-size: 16px * 0.75;
+    background: $--color-gray-50;
+    color: $--color-gray-900;
+    font-size: $--font-size-50;
     text-transform: uppercase;
     letter-spacing: 0.1em;
     font-weight: bold;
@@ -152,11 +210,11 @@ export default {
     border-radius: 50%;
 
     &--hit {
-      background-color: $color-background--contrast;
+      background-color: $--color-gray-50;
     }
 
     &--new {
-      background-color: $color-primary;
+      background-color: $--color-primary-400;
     }
   }
 }

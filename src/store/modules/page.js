@@ -1,15 +1,16 @@
-/* eslint-disable no-shadow */
+import { MOBILE_THRESHOLD } from '@/settings.js';
+
 const state = {
   isMenuOpen: false,
   isCartOpen: false,
   isFrozen: false,
-  nextAction: null,
   zoomedImage: null,
+  nextAction: null,
+  isMobile: window.innerWidth < MOBILE_THRESHOLD,
 };
 
 const getters = {
-  isOverlayed: state => state.isCartOpen || state.isMenuOpen,
-  isZoomed: state => state.zoomedImage !== null,
+  isOverlayed: (state) => state.isCartOpen || state.isMenuOpen || state.zoomedImage !== null,
 };
 
 const mutations = {
@@ -22,11 +23,11 @@ const mutations = {
   scheduleAction(state, payload) {
     state.nextAction = payload;
   },
-  zoomImage(state, payload) {
+  setZoomedImage(state, payload) {
     state.zoomedImage = payload;
   },
-  closeImage(state) {
-    state.zoomedImage = null;
+  setMobile(state, payload) {
+    state.isMobile = payload;
   },
 };
 
@@ -52,6 +53,7 @@ const actions = {
   closeAll({ commit }) {
     commit('setCart', false);
     commit('setMenu', false);
+    commit('setZoomedImage', null);
   },
   scheduleAction({ state, commit, dispatch }, { next, blocking }) {
     if (state[`is${blocking}Open`]) {

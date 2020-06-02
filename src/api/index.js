@@ -1,72 +1,61 @@
 import axios from 'axios';
 
-const apiClient = axios.create({});
+const baseURL = 'http://efila.dubaua.ru/';
+const token = 'e7fab8a7d0929281f434f5572edf32';
 
-apiClient.interceptors.request.use(config => {
-  const { params } = config;
-  return {
-    ...config,
-    params: {
-      ...params,
-      token: 'e7fab8a7d0929281f434f5572edf32',
-    },
-  };
+const apiClient = axios.create({
+  baseURL,
 });
 
-const prepareProduct = product => {
-  if (typeof product.versions !== 'object') {
-    return product;
+const prepareProduct = (product, key) => {
+  const result = {
+    ...product,
+    categoryId: key,
+  };
+
+  if (product.sizes) {
+    result.sizes = product.sizes.map((size) => {
+      const _size = size.value;
+      const options = _size.options;
+      if (options) {
+        _size.options = options.map((option) => option.value);
+      }
+      return _size;
+    });
   }
 
-  // code below converts array of versions to hashMap
-  return {
-    ...product,
-    versions: product.versions.reduce((hashMap, version, index) => {
-      hashMap[index] = {
-        id: index,
-        measure: version.value.measure,
-        price: version.value.price,
-      };
-      return hashMap;
-    }, {}),
-    chosenVersion: 0,
-  };
+  return result;
 };
 
-async function getProductsByKey(key) {
-  const { data } = await apiClient(`/cockpit/api/collections/get/${key}`);
-  return data.entries.map(prepareProduct);
-}
-
-async function getCollectionByKey(key) {
-  const { data } = await apiClient(`/cockpit/api/collections/get/${key}`);
-  return data;
-}
-
-async function getCollectionSchemaByKey(key) {
-  const { data } = await apiClient(`/cockpit/api/collections/collection/${key}`);
-  return data;
+async function getCollectionByKey({ key, filter, options }) {
+  const { data } = await apiClient({
+    method: 'post',
+    url: `/cockpit/api/collections/get/${key}?token=${token}`,
+    data: {
+      filter,
+      ...options,
+      populate: 1,
+      sort: { _o: true },
+    },
+  });
+  return data.entries.map((entry) => prepareProduct(entry, key));
 }
 
 async function getSingletonByKey(key) {
-  const { data } = await apiClient(`/cockpit/api/singletons/get/${key}`);
+  const { data } = await apiClient({
+    method: 'post',
+    url: `/cockpit/api/singletons/get/${key}?token=${token}`,
+  });
   return data;
 }
 
-async function sendForm(form) {
+async function sendForm({ url, form }) {
   const { data } = await apiClient({
-    url: `/order/`,
+    method: 'post',
+    url,
     data: form,
   });
   return data;
 }
 
-async function saveOrder(form) {
-  const { data } = await apiClient({
-    url: `/cockpit/api/collections/save/orders`,
-    data: form,
-  });
-  return data;
-}
-
-export { getProductsByKey, getCollectionByKey, getCollectionSchemaByKey, getSingletonByKey, sendForm, saveOrder };
+export { baseURL, getCollectionByKey, getSingletonByKey, sendForm };

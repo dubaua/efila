@@ -14,16 +14,20 @@
       <div v-if="totalAmount" class="cart-button__label">
         {{ cartLabel }}
       </div>
-      <icon glyph="shopping-cart" :width="48" :height="48" />
+      <icon class="cart-button__icon" glyph="shopping-bag" :width="48" :height="48" />
     </button>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
+import Icon from '@/components/icon/Icon.vue';
 
 export default {
   name: 'AppFooter',
+  components: {
+    Icon,
+  },
   computed: {
     ...mapState(['page']),
     ...mapGetters(['totalAmount']),
@@ -39,19 +43,19 @@ export default {
 
 <style lang="scss">
 @import '~@/styles/_globals.scss';
-@import '../styles/hamburger';
+@import '~@/styles/hamburger.scss';
 
 .footer {
   position: fixed;
   bottom: 0;
-  height: 48px;
   left: 0;
-  padding: 4px 0;
   right: 0;
+  height: 48px;
+  padding: 4px 0;
   z-index: 10;
   display: flex;
   justify-content: space-between;
-  background: $color-background--contrast;
+  background: $--color-gray-contrast-50;
 
   &__button {
     max-width: 16px * 4;
@@ -63,13 +67,14 @@ export default {
     margin: 0;
 
     & .icon {
-      fill: $color-text--contrast;
+      fill: $--color-gray-900;
     }
   }
+
   &__logo {
     flex-grow: 1;
     text-align: center;
-    fill: $color-text--contrast;
+    fill: $--color-gray-900;
     svg {
       margin-left: auto;
       margin-right: auto;
@@ -82,17 +87,22 @@ export default {
 
   &__label {
     position: absolute;
-    top: 9px;
-    right: 12px;
-    width: 13px;
-    height: 13px;
-    padding: 1px;
-    border-radius: 50%;
-    color: $color-text--contrast;
-    background: $color-primary;
-    font-weight: 500;
-    font-size: 10px;
-    line-height: 13px;
+    top: 15px;
+    left: 16px;
+    width: 28px;
+    height: 16px;
+    box-sizing: border-box;
+    color: white;
+    font: 700 20px/20px monospace;
+
+    &--overflow {
+      font: 700 16px/18px monospace;
+    }
+  }
+
+  &__icon {
+    margin-left: auto;
+    margin-right: 10px;
   }
 }
 </style>

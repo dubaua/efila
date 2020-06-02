@@ -1,19 +1,28 @@
 $breakpoints: (
-	xs: 0,
-	sm: 576px,
-	md: 768px,
-	lg: 992px,
-	xl: 1200px,
-	xxl: 1600px,
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1600px,
 );
 
-@mixin from-breakpoint($breakpoint) {
-	$size: map-get($breakpoints, $breakpoint);
-	@if ($size == 0) {
-		@content;
-	} @else {
-		@media screen and (min-width: $size) {
-			@content;
-		}
-	}
+@mixin from($breakpoint) {
+  $size: map-get($breakpoints, $breakpoint);
+  @if ($size == 0) {
+    @content;
+  } @else {
+    @media screen and (min-width: $size) {
+      @content;
+    }
+  }
+}
+
+@mixin to($to) {
+  $min: map-get($breakpoints, $to);
+  @if ($min != 0) {
+    @media screen and (max-width: $min - 1px) {
+      @content;
+    }
+  }
 }

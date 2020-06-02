@@ -1,0 +1,15 @@
+@mixin fixed-overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+@mixin numbers {
+  -moz-font-feature-settings: 'tnum' 1;
+  -ms-font-feature-settings: 'tnum' 1;
+  -o-font-feature-settings: 'tnum' 1;
+  -webkit-font-feature-settings: 'tnum' 1;
+  font-feature-settings: 'tnum' 1;
+}

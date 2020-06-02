@@ -1,46 +1,22 @@
-@import url('https://fonts.googleapis.com/css?family=IBM+Plex+Serif:400,400i,500,600,700|Rubik:400,700&display=swap&subset=cyrillic');
-@import '_grid.scss';
-@import '_colors.scss';
-@import '_globals.scss';
-@import '_transitions.scss';
-@import '_typography.scss';
+@import url('https://fonts.googleapis.com/css?family=Rubik:400,700&display=swap&subset=cyrillic');
+@import '~@/styles/_grid.scss';
+@import '~@/styles/_globals.scss';
+@import '~@/styles/typography.scss';
+@import '~@/styles/form.scss';
+@import '~@/styles/loading-background.scss';
+
 
 html {
   overflow-y: scroll;
-  min-width: 100vh;
-  font-family: $font-body;
+  overflow-x: hidden;
+  min-height: 100vh;
+  font-family: $--font-face-body;
+}
+
+*:focus {
+  outline: none;
 }
 
 .currentColor {
   fill: currentColor;
-}
-
-.color-text-900 {
-  color: $color-gray-900;
-  fill: $color-gray-900;
-}
-
-.contrast .color-text-900 {
-  color: $color-gray-contrast-900;
-  fill: $color-gray-contrast-900;
-}
-
-.color-text {
-  color: $color-text;
-  fill: $color-text;
-}
-
-.color-primary {
-  color: $color-primary;
-  fill: $color-primary;
-}
-
-.color-text--contrast {
-  color: $color-text--contrast;
-  fill: $color-text--contrast;
-}
-
-.color-background--contrast {
-  color: $color-background--contrast;
-  fill: $color-background--contrast;
 }

@@ -1,17 +1,4 @@
-@import './_colors.scss';
 @import './_breakpoints.scss';
-
-$font-title:'IBM Plex Serif', serif;
-$font-body: 'Rubik', sans-serif;
-
-$timing-fast: 0.1s;
-$timing: 0.33s;
-$timing-long: 0.5s;
-
-@mixin fixed-overlay {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+@import './_transitions.scss';
+@import './_variables.scss';
+@import './_mixins.scss';

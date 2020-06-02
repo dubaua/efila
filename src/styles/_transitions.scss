@@ -1,3 +1,7 @@
+$timing-fast: 0.1s;
+$timing: 0.33s;
+$timing-long: 0.5s;
+
 // Cubic
 $easeInCubic: cubic-bezier(0.55, 0.055, 0.675, 0.19);
 $easeOutCubic: cubic-bezier(0.215, 0.61, 0.355, 1);
@@ -40,15 +44,60 @@ $easeInOutBack: cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
 // opacity, x-modifier, y-modifier, distance
 $transitions: (
-  slide-up: (o: 1, x: 0, y: 1, d: 100%),
-  slide-right: (o: 1, x: -1, y: 0, d: 100%),
-  slide-down: (o: 1, x: 0, y: -1, d: 100%),
-  slide-left: (o: 1, x: 1, y: 0, d: 100%),
-  fade-up: (o: 0, x: 0, y: 1, d: 16px * 2),
-  fade-right: (o: 0, x: -1, y: 0, d: 16px * 2),
-  fade-down: (o: 0, x: 0, y: -1, d: 16px * 2),
-  fade-left: (o: 0, x: 1, y: 0, d: 16px * 2),
-  fade: (o: 0, x: 0, y: 0, d: 0)
+  slide-up: (
+    o: 1,
+    x: 0,
+    y: 1,
+    d: 100%,
+  ),
+  slide-right: (
+    o: 1,
+    x: -1,
+    y: 0,
+    d: 100%,
+  ),
+  slide-down: (
+    o: 1,
+    x: 0,
+    y: -1,
+    d: 100%,
+  ),
+  slide-left: (
+    o: 1,
+    x: 1,
+    y: 0,
+    d: 100%,
+  ),
+  fade-up: (
+    o: 0,
+    x: 0,
+    y: 1,
+    d: 16px * 2,
+  ),
+  fade-right: (
+    o: 0,
+    x: -1,
+    y: 0,
+    d: 16px * 2,
+  ),
+  fade-down: (
+    o: 0,
+    x: 0,
+    y: -1,
+    d: 16px * 2,
+  ),
+  fade-left: (
+    o: 0,
+    x: 1,
+    y: 0,
+    d: 16px * 2,
+  ),
+  fade: (
+    o: 0,
+    x: 0,
+    y: 0,
+    d: 0,
+  ),
 );
 
 @each $name, $params in $transitions {
@@ -66,10 +115,7 @@ $transitions: (
   .#{$name}-enter,
   .#{$name}-leave-to {
     @if (map-get($params, y) != 0) or (map-get($params, x) != 0) {
-      transform: translate(
-        #{map-get($params, x) * map-get($params, d)},
-        #{map-get($params, y) * map-get($params, d)}
-      );
+      transform: translate(#{map-get($params, x) * map-get($params, d)}, #{map-get($params, y) * map-get($params, d)});
     }
     @if map-get($params, o) == 0 {
       opacity: #{map-get($params, o)};

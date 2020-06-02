@@ -112,7 +112,7 @@ $cross-axis-alignments: (
 }
 
 @each $breakpoint, $size in $breakpoints {
-  @include from-breakpoint($breakpoint) {
+  @include from($breakpoint) {
     // @include limit-container($size);
     @include create-grid-alignments($breakpoint);
     @include create-colunms($breakpoint);

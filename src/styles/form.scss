@@ -1,0 +1,80 @@
+@import '~@/styles/_globals.scss';
+
+.form {
+  min-height: $--min-form-height;
+  padding: 0 #{$--font-size-300} 16px;
+  & .form-group + .form-group {
+    margin-top: 12px;
+  }
+
+  & fieldset {
+    border: 0;
+    padding: 0;
+    margin: 0 0 12px;
+  }
+  & label {
+    display: none;
+  }
+  & input,
+  & textarea {
+    width: 100%;
+    padding: 4px 8px;
+    box-sizing: border-box;
+    color: inherit;
+    background: $--color-gray-50;
+    border: 0;
+    border-bottom: 1px solid $--color-gray-300;
+    border-radius: 0;
+
+    &:focus {
+      outline: none;
+      border-color: $--color-focus;
+    }
+
+    &::placeholder {
+      color: $--color-gray-700;
+    }
+  }
+
+  & textarea {
+    display: block;
+    resize: vertical;
+  }
+
+  .field-radios {
+    & > label {
+      display: none;
+    }
+    .radio-list {
+      label {
+        display: inline-block;
+        white-space: nowrap;
+        width: auto;
+        color: $--color-gray-700;
+        + label {
+          margin-left: 1em;
+        }
+        input {
+          width: auto;
+          margin-right: 0.3em;
+        }
+      }
+    }
+  }
+  &--contrast {
+    .field-checkbox label {
+      color: $--color-gray-contrast-700;
+    }
+
+    input,
+    textarea {
+      color: $--color-gray-contrast-900;
+      background: $--color-gray-contrast-50;
+      border-color: $--color-gray-contrast-300;
+
+      &::placeholder {
+        color: $--color-gray-contrast-700;
+      }
+    }
+  }
+}

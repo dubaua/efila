@@ -5,14 +5,18 @@
 </template>
 
 <script>
+import Icon from '@/components/icon/Icon.vue';
+
 export default {
   name: 'Logo',
+  components: {
+    Icon,
+  },
 };
 </script>
 
 <style lang="scss">
 .logo {
-  margin-top: 10px;
   display: inline-block;
   line-height: 0;
   text-align: center;
