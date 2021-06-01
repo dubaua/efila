@@ -39,6 +39,9 @@ const webpackConfig = merge(commonConfig, {
     watchOptions: {
       poll: true,
     },
+    proxy: {
+      '/cockpit/api/': 'http://e-fila96.ru/',
+    },
   },
 });
 

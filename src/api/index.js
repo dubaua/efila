@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseURL = 'http://e-fila96.ru/';
+const baseURL = 'https://e-fila96.ru/';
 const token = 'e7fab8a7d0929281f434f5572edf32';
 
 const apiClient = axios.create({
