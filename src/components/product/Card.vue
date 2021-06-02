@@ -20,7 +20,11 @@
         <p v-else>{{ chosenSize.options[optionIndex].optionName }}</p>
       </div>
       <div class="card__action">
-        <div class="card__price">{{ numberWithSpaces(price) }} ₽</div>
+        <div class="card__price">
+          <div class="card__price-value" :class="{'card__price-value--old' : priceDiscount}">{{ numberWithSpaces(price) }} ₽</div>
+          <div v-if="priceDiscount" class="card__price-value">{{ numberWithSpaces(priceDiscount) }} ₽</div>
+        </div>
+
         <drive-button class="card__button button--wide" :active="amount > 0" @click="handleAddToCard(product)">
           <template #initial>
             Добавить
@@ -86,6 +90,14 @@ export default {
       const extraCharge = this.chosenSize.options ? this.chosenSize.options[this.optionIndex].extraCharge : 0;
       return this.chosenSize.price + extraCharge;
     },
+    priceDiscount() {
+      if (!this.chosenSize.priceDiscount) {
+        return;
+      }
+
+      const extraCharge = this.chosenSize.options ? this.chosenSize.options[this.optionIndex].extraCharge : 0;
+      return this.chosenSize.priceDiscount + extraCharge;
+    },
   },
   methods: {
     ...mapActions(['addToCart']),
@@ -112,6 +124,7 @@ export default {
         sizeIndex,
         optionIndex,
         price,
+        priceDiscount,
         chosenSize: { sizeName, options },
       } = this;
       const optionName = options ? options[optionIndex].optionName : '';
@@ -123,6 +136,7 @@ export default {
         optionIndex,
         title,
         price,
+        priceDiscount,
         sizeName,
         optionName,
       });
@@ -185,11 +199,18 @@ export default {
     align-items: center;
     justify-content: space-between;
     margin-top: auto;
+    min-height: 50px;
   }
 
   &__price {
     font-size: $--font-size-300;
     max-width: 38%;
+  }
+
+  &__price-value--old {
+    font-size: $--font-size-100;
+    opacity: 0.45;
+    text-decoration: line-through;
   }
 
   &__button {

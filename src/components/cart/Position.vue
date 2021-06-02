@@ -19,7 +19,7 @@
       >
         +
       </button>
-      <span>&times; {{ numberWithSpaces(position.price) }} ₽</span>
+      <span>&times; {{ numberWithSpaces(position.priceDiscount || position.price) }} ₽</span>
     </div>
   </div>
 </template>

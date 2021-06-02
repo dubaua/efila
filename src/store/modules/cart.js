@@ -5,17 +5,28 @@ const state = {};
 const getters = {
   totalCost: (state) =>
     Object.keys(state).reduce(
-      (sum, cartProductId) => sum + state[cartProductId].price * state[cartProductId].amount,
-      0,
+      (sum, cartProductId) =>
+        sum +
+        (state[cartProductId].priceDiscount || state[cartProductId].price) *
+          state[cartProductId].amount,
+      0
     ),
-  totalAmount: (state) => Object.keys(state).reduce((sum, cartProductId) => sum + state[cartProductId].amount, 0),
-  getAmountInCardById: (state) => (cartProductId) => (state[cartProductId] ? state[cartProductId].amount : 0),
+  totalAmount: (state) =>
+    Object.keys(state).reduce(
+      (sum, cartProductId) => sum + state[cartProductId].amount,
+      0
+    ),
+  getAmountInCardById: (state) => (cartProductId) =>
+    state[cartProductId] ? state[cartProductId].amount : 0,
 };
 
 const actions = {
   addToCart({ state, commit }, product) {
     if (typeof state[product.cartProductId] !== 'undefined') {
-      commit('changeAmount', { cartProductId: product.cartProductId, modifier: 1 });
+      commit('changeAmount', {
+        cartProductId: product.cartProductId,
+        modifier: 1,
+      });
     } else {
       commit('addToCart', { ...product, amount: 1 });
     }
@@ -37,7 +48,9 @@ const mutations = {
     Vue.delete(state, cartProductId);
   },
   clearCart(state) {
-    Object.keys(state).forEach((cartProductId) => Vue.delete(state, cartProductId));
+    Object.keys(state).forEach((cartProductId) =>
+      Vue.delete(state, cartProductId)
+    );
   },
   changeAmount(state, { cartProductId, modifier }) {
     state[cartProductId].amount += modifier;
